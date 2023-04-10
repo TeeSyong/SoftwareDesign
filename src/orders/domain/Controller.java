@@ -1,6 +1,7 @@
 package orders.domain;
 
 public class Controller {
+	private ViewInvoice viewInvoice = new ViewInvoice();
 
 	public Controller() {
 		//Initialize stuff
@@ -25,8 +26,7 @@ public class Controller {
 	
 	
 	//VIEW INVOICE
-	
-	
-	
+	public void viewinvoice()
+		viewInvoice.operation();
 	//CHECK ORDER
 }

@@ -54,7 +54,7 @@ public class ConsoleUI {
 				//view order
 				break;
 			case 5:
-				//view invoice
+				controller.viewinvoice();
 				break;
 			case 6:
 				//check order
