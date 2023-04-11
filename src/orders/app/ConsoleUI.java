@@ -42,22 +42,22 @@ public class ConsoleUI {
 			}
 			switch (choice) {
 			case 1:
-				//create user profile
+				createUserProfile();
 				break;
 			case 2:
-				//view menu
+				viewMenu();
 				break;
 			case 3:
-				//create order
+				createOrder();
 				break;
 			case 4:
-				//view order
+				viewOrder();
 				break;
 			case 5:
-				controller.viewinvoice();
+				viewInvoice();
 				break;
 			case 6:
-				//check order
+				checkOrder();
 				break;
 			case 7:
 				break;
@@ -71,24 +71,55 @@ public class ConsoleUI {
 	
 	//CREATE USER PROFILE 
 	
-	
+	public void createUserProfile() {
+		
+	}
 	
 	
 	//VIEW MENU
 	
-	
+	public void viewMenu() {
+		
+	}
 	
 	//CREATE ORDER
 	
-	
+	public void createOrder() {
+		
+	}
 	
 	//VIEW ORDER
 	
 	
-	
+	public void viewOrder() {
+		
+	}
 	//VIEW INVOICE
-	
+	public void viewInvoice() {
+		controller.viewinvoice();
+	}
 	
 	
 	//CHECK ORDER
+	
+	public void checkOrder() {
+		System.out.println("You want to:");
+		System.out.println("1. Check all orders");
+		System.out.println("2. Search order");
+		int choice = scanner.nextInt();
+		String skip = scanner.nextLine();
+		
+		if(choice == 1) {
+			
+		}
+		else if (choice ==2) {
+			
+		}
+		else {
+			System.out.println("Invalid input");
+		}
+			
+		
+		
+	}
 }
