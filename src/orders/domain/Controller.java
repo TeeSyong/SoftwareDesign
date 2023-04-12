@@ -1,7 +1,7 @@
 package orders.domain;
 
 
-
+import java.util.List;
 
 
 public class Controller {
@@ -46,6 +46,19 @@ public class Controller {
 		
 	}
 	
+	public void openOrderFile() {
+		dataLists.openOrderFile();
+	}
 	
+	public int getNumberOfOrders() {
+		return dataLists.getNumberOfOrders();
+	}
+
+	public List<Order> getAllOrders(){
+		return dataLists.getAllOrders();
+	}
 	
+	public List<String> getOrderIdList(){
+		return dataLists.getOrderIdList();
+	}
 }
