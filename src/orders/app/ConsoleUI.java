@@ -32,13 +32,15 @@ public class ConsoleUI {
 			System.out.print("Enter your choice (1-7): ");
 			choice = scanner.nextInt();
 			// Clear ENTER key after integer input
-			String skip = scanner.next();
+			String skip = scanner.nextLine();
+			System.out.println("\n");
 			while (choice < 1 || choice > 7) {
 				System.out.println("Invalid choice.");
 				System.out.print("Enter your choice (1-7): ");
 				choice = scanner.nextInt();
 				// Clear ENTER key after integer input
-				skip = scanner.next();
+				skip = scanner.nextLine();
+				System.out.println("\n");
 			}
 			switch (choice) {
 			case 1:
@@ -103,23 +105,96 @@ public class ConsoleUI {
 	//CHECK ORDER
 	
 	public void checkOrder() {
+		
 		System.out.println("You want to:");
 		System.out.println("1. Check all orders");
 		System.out.println("2. Search order");
+		System.out.print("Enter your choice (1-2): ");
 		int choice = scanner.nextInt();
 		String skip = scanner.nextLine();
+		System.out.println("\n");
+		while(choice < 1 || choice > 2) {
+			System.out.println("Invalid choice.");
+			System.out.print("Enter your choice (1-2): ");
+			choice = scanner.nextInt();
+			skip = scanner.nextLine();
+			System.out.println("\n");
+		}
 		
+		controller.openOrderFile();
+		int count = controller.getNumberOfOrders();
+		List<Order> orders = controller.getAllOrders();
+		List<String> orderIdList = controller.getOrderIdList();
+		
+		Order aOrder;
 		if(choice == 1) {
+			if(count==0)
+				System.out.println("No orders to display");
+			else {
+				
+				for(int i=0; i<orderIdList.size();i++) {
+					System.out.println("Order ID: " +orderIdList.get(i)+"\n");
+					System.out.println("Item Code\tName\t\tQtt\tRemarks");
+					System.out.println("-----------------------------------------------");
+					for(int j=0; j<count; j++) {
+						aOrder = orders.get(j);
+						
+						if(orderIdList.get(i).equals(aOrder.getOrderId())) {
+							System.out.printf("%s\t\t%s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
+									, aOrder.getQuantity(), aOrder.getRemark());
+							
+							//System.out.println(aOrder.getItemCode() + "\t\t" + aOrder.getFoodName() +"\t"
+							//		+ "\t" + aOrder.getQuantity() + "\t" + aOrder.getRemark());
+						}
+						
+					}
+					System.out.println("\n");
+				}
+			}
+		}
+		else if (choice == 2) {
+			boolean loop = false;
+			do {
+				
+				System.out.println("Order ID\n--------");
+				for(int i=0;i<orderIdList.size();i++) {
+					System.out.println(orderIdList.get(i));
+				}
+				System.out.println("\n");
+				System.out.print("Enter Order ID to search: ");
+				String orderID = scanner.nextLine();
+				System.out.println("\n");
+				while(!orderIdList.contains(orderID)) {
+					System.out.println("Order ID do not exist.");
+					System.out.print("Enter Order ID to search: ");
+					orderID = scanner.nextLine();
+					System.out.println("\n");
+				}
+				
+				System.out.println("Order ID: " +orderID +"\n");
+				System.out.println("Item Code\tName\t\tQtt\tRemarks");
+				System.out.println("-----------------------------------------------");
+				for(int j=0; j<count; j++) {
+					aOrder = orders.get(j);
+					
+					if(orderID.equals(aOrder.getOrderId())) {
+						System.out.printf("%s\t\t%s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
+								, aOrder.getQuantity(), aOrder.getRemark());
+					}
+				}
+				System.out.println("\n");
+				System.out.print("Search order ID again?(Y/N): ");
+				String opt = scanner.nextLine();
+				System.out.println("\n");
+				if(opt.toUpperCase().equals("Y"))
+					loop = true;
+				else
+					loop = false;
+				
+			}while(loop);
 			
 		}
-		else if (choice ==2) {
-			
-		}
-		else {
-			System.out.println("Invalid input");
-		}
-			
-		
+		orders.clear();
 		
 	}
 }
