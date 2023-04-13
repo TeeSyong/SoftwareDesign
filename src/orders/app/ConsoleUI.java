@@ -134,13 +134,13 @@ public class ConsoleUI {
 				
 				for(int i=0; i<orderIdList.size();i++) {
 					System.out.println("Order ID: " +orderIdList.get(i)+"\n");
-					System.out.println("Item Code\tName\t\tQtt\tRemarks");
+					System.out.println("Item Code\tName\t\t\tQtt\tRemarks");
 					System.out.println("-----------------------------------------------");
 					for(int j=0; j<count; j++) {
 						aOrder = orders.get(j);
 						
 						if(orderIdList.get(i).equals(aOrder.getOrderId())) {
-							System.out.printf("%s\t\t%s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
+							System.out.printf("%s\t\t%-20s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
 									, aOrder.getQuantity(), aOrder.getRemark());
 							
 							//System.out.println(aOrder.getItemCode() + "\t\t" + aOrder.getFoodName() +"\t"
@@ -178,7 +178,7 @@ public class ConsoleUI {
 					aOrder = orders.get(j);
 					
 					if(orderID.equals(aOrder.getOrderId())) {
-						System.out.printf("%s\t\t%s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
+						System.out.printf("%s\t%25s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
 								, aOrder.getQuantity(), aOrder.getRemark());
 					}
 				}
