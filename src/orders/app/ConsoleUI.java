@@ -190,6 +190,8 @@ public class ConsoleUI {
 						String remarksToAdd = scanner.nextLine();
 						
 						//controller.addItem();
+						//controller.printMenu();
+					
 						break;
 					default:
 						System.out.println("Invalid input. Please select again");
