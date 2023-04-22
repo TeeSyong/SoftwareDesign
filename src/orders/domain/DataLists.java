@@ -27,18 +27,17 @@ public class DataLists implements IDataStore {
 	// Put your text file under file folder (src->order->file)
 	// Write your file location here for further reference
 	// cz - "C:\\Github folder\\SoftwareDesign\\src\\orders\\file\\*.txt"
-	// sy -
-	// "D:\\Users\\Desktop\\SoftwareDesign\\SoftwareDesign\\src\\orders\\file\\menu.txt"
+	// sy -"D:\\Users\\Desktop\\SoftwareDesign\\SoftwareDesign\\src\\orders\\file\\menu.txt"
 	// yl -
 	// bong -
 	// alex -
 	// -------------------------------------------------------------------------------
 	public void openOrderFile() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
-		String fileName = "order.txt";
+		String fileName = System.getProperty("user.dir")+"\\src\\orders\\file\\order.txt";;
 		Scanner inputStream = null;
 		try {
-			inputStream = new Scanner(new File("C:\\Github folder\\SoftwareDesign\\src\\orders\\file\\order.txt"));
+			inputStream = new Scanner(new File(fileName));
 		} catch (FileNotFoundException e) {
 			System.out.println("Error opening the file " + fileName);
 			System.exit(0);
@@ -81,11 +80,11 @@ public class DataLists implements IDataStore {
 	// View Menu Code
 	public ArrayList<String[]> readMenu() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
-		String fileName = "order.txt";
+		String fileName = System.getProperty("user.dir")+"\\src\\orders\\file\\menu.txt";
 		Scanner inputStream = null;
 		try {
 			inputStream = new Scanner(
-					new File("D:\\Users\\Desktop\\SoftwareDesign\\SoftwareDesign\\src\\orders\\file\\menu.txt"));
+					new File(fileName));
 		} catch (FileNotFoundException e) {
 			System.out.println("Error opening the file " + fileName);
 			System.exit(0);
