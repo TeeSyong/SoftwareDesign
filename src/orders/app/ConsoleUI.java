@@ -1,6 +1,7 @@
 package orders.app;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import orders.domain.*;
@@ -83,7 +84,7 @@ public class ConsoleUI {
 	public void viewMenu() {
 		System.out.println("MENU");
 		System.out.println("-------------------------------------");
-		//controller.printMenu(); //continue implement code
+		controller.printMenu();
 		
 		boolean searchChoiceInvalid;
 		do {
@@ -93,9 +94,9 @@ public class ConsoleUI {
 			
 			if(searchChoice.equals("Y")) {
 				System.out.print("Enter keyword or phrases to search: ");
-				String keywords = scanner.nextLine();
-				//console.findKeyword(); //continue implement code
-				//console.printKeywordMenu(); //continue implement code
+				String keywords = scanner.nextLine().toLowerCase();
+				controller.printKeywordMenu(keywords);
+
 				
 			} else if(searchChoice.equals("N")) {
 				break;

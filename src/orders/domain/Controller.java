@@ -25,8 +25,15 @@ public class Controller {
 	
 	
 	//VIEW MENU
+	public void printMenu()
+	{
+		dataLists.printMenu();
+	}
 	
-	
+	public void printKeywordMenu(String keywords) {
+		dataLists.printKeywordMenu(keywords);
+	}
+
 	
 	//CREATE ORDER
 	
