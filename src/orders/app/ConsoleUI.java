@@ -81,7 +81,47 @@ public class ConsoleUI {
 	//VIEW MENU
 	
 	public void viewMenu() {
+		System.out.println("MENU");
+		System.out.println("-------------------------------------");
+		//controller.printMenu(); //continue implement code
 		
+		boolean searchChoiceInvalid;
+		do {
+			searchChoiceInvalid = false;
+			System.out.print("Do you want to search items in menu? (Y/N): ");
+			String searchChoice = scanner.nextLine().toUpperCase();
+			
+			if(searchChoice.equals("Y")) {
+				System.out.print("Enter keyword or phrases to search: ");
+				String keywords = scanner.nextLine();
+				//console.findKeyword(); //continue implement code
+				//console.printKeywordMenu(); //continue implement code
+				
+			} else if(searchChoice.equals("N")) {
+				break;
+				
+			} else {
+				System.out.println("Input error. Please enter again.");
+				searchChoiceInvalid = true;
+			}
+		} while(searchChoiceInvalid);
+		
+		boolean orderChoiceInvalid;
+		do {
+			orderChoiceInvalid = false;
+			System.out.print("Do you want to make order? (Y/N): ");
+			String orderChoice = scanner.nextLine().toUpperCase();
+			
+			if(orderChoice.equals("Y")) {
+				createOrder();
+			}else if(orderChoice.equals("N")) {
+				System.out.print("Press Enter to return to main menu");
+				scanner.nextLine();
+			}else {
+				System.out.println("Input error. Please enter again.");
+				orderChoiceInvalid = true;
+			}
+		} while(orderChoiceInvalid);
 	}
 	
 	//CREATE ORDER
@@ -95,6 +135,82 @@ public class ConsoleUI {
 	
 	public void viewOrder() {
 		
+		System.out.print("Enter order number: ");
+		String orderId = scanner.nextLine();
+		//controller.printOrder();
+		boolean invalidChoice = false;
+		String choice;
+		System.out.print("Do you want to modify your order? (Y/N): ");
+		do {
+			choice = scanner.next().toUpperCase();
+			if(choice.equals("Y")) {	
+				boolean invalidOperation = false;
+				do {
+					System.out.println("1) Modify item");
+					System.out.println("2) Delete item");
+					System.out.println("3) Add item");
+					System.out.print("Please select an operation that you would like to do: ");
+					int operation = scanner.nextInt(); 
+					scanner.nextLine(); //skip
+					
+					switch(operation) {
+					case 1:
+						String codeToModify, remarksToModify;
+						int qttToModify;
+						
+						System.out.println("Enter item code to modify: ");
+						codeToModify = scanner.nextLine();
+						System.out.println("Enter quantity           : ");
+						qttToModify = scanner.nextInt();
+						scanner.nextLine(); //skip
+						System.out.println("Enter remarks (- if none): ");
+						remarksToModify = scanner.nextLine();
+						
+						//controller.updateItem();
+						//controller.printOrder();
+
+						break;
+					case 2:
+						System.out.print("Enter item code to delete: ");
+						String codeToDel = scanner.nextLine();
+						
+						//controller.deleteItem();
+						//controller.printOrder();
+						
+						break;
+					case 3:
+						//controller.printMenu();
+						
+						System.out.println("Enter item code to order: ");
+						String codeToAdd = scanner.nextLine();
+						System.out.println("Enter quantity           : ");
+						int qttToAdd = scanner.nextInt();
+						scanner.nextLine(); //skip
+						System.out.println("Enter remarks (- if none): ");
+						String remarksToAdd = scanner.nextLine();
+						
+						//controller.addItem();
+						break;
+					default:
+						System.out.println("Invalid input. Please select again");
+						invalidOperation = true;
+						break;
+					}
+				} while (invalidOperation);
+				
+			} else if(choice.equals("N")) {
+				System.out.print("Press Enter to return to main menu");
+				scanner.nextLine();
+			} else {
+				System.out.println("Invalid input. Please select again");
+				invalidChoice = true;
+			}
+
+			System.out.print("Do you want to modify your order? (Y/N): ");
+			choice = scanner.next().toUpperCase();
+		} while(invalidChoice || choice.equals("Y"));
+		
+
 	}
 	//VIEW INVOICE
 	public void viewInvoice() {
