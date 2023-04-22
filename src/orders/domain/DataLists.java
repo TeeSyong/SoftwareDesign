@@ -186,52 +186,19 @@ public class DataLists implements IDataStore {
 				bestMatchScore = matchScore;
 				matchesItem.clear();
 				matchesItem.add(linesRead.get(i));
-			} else if (matchScore == bestMatchScore) {
-				matchesItem.add(linesRead.get(i));
-			}
+			} 
 		}
 		return matchesItem;
 	}
 	
 	public void printKeywordMenu(String keywords) {
 		ArrayList<HashMap<String, String>> linesRead = findKeywords(keywords);
-		boolean isPrintedBurger= false;
-		boolean isPrintedSides = false;
-		boolean isPrintedDrinks = false;
 		System.out.println("MENU");
 		System.out.println("-------------");
-
+		System.out.println("Item Code\t Name\t\t Price");
+		System.out.println("-------------------------------------------");
 
 		for (int i = 0; i < linesRead.size(); i++) {
-			
-			if(!isPrintedBurger) {
-				if (linesRead.get(i).get("Code").charAt(0) == 'B') { 
-					System.out.println("BURGERS");
-					System.out.println("--------");
-					System.out.println("Item Code\t Name\t\t Price");
-					System.out.println("-------------------------------------------");
-					isPrintedBurger=true;
-				}
-			}
-			if (!isPrintedSides) {
-				if (linesRead.get(i).get("Code").charAt(0) == 'S') {
-					System.out.println("SIDES");
-					System.out.println("--------");
-					System.out.println("Item Code\t Name\t\t Price");
-					System.out.println("-------------------------------------------");
-					isPrintedSides = true;
-				}
-			}
-
-			if (!isPrintedDrinks) {
-				if (linesRead.get(i).get("Code").charAt(0) == 'D') {
-					System.out.println("DRINKS");
-					System.out.println("--------");
-					System.out.println("Item Code\t Name\t\t Price");
-					System.out.println("-------------------------------------------");
-					isPrintedDrinks = true;
-				}
-			}
 			System.out.print(linesRead.get(i).get("Code") + "\t\t");
 			System.out.print(linesRead.get(i).get("Name") + "\t");
 			System.out.println(linesRead.get(i).get("Price") + "\t ");
