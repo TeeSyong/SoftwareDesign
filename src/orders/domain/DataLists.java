@@ -35,7 +35,8 @@ public class DataLists implements IDataStore {
 	// -------------------------------------------------------------------------------
 	public void openOrderFile() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
-		String fileName = System.getProperty("user.dir")+"\\src\\orders\\file\\order.txt";;
+		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
+		;
 		Scanner inputStream = null;
 		try {
 			inputStream = new Scanner(new File(fileName));
@@ -81,11 +82,10 @@ public class DataLists implements IDataStore {
 	// View Menu Code
 	public ArrayList<String[]> readMenu() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
-		String fileName = System.getProperty("user.dir")+"\\src\\orders\\file\\menu.txt";
+		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\menu.txt";
 		Scanner inputStream = null;
 		try {
-			inputStream = new Scanner(
-					new File(fileName));
+			inputStream = new Scanner(new File(fileName));
 		} catch (FileNotFoundException e) {
 			System.out.println("Error opening the file " + fileName);
 			System.exit(0);
@@ -119,22 +119,21 @@ public class DataLists implements IDataStore {
 
 	public void printMenu() {
 		ArrayList<HashMap<String, String>> linesRead = menuInDictionary();
-		boolean isPrintedBurger= false;
+		boolean isPrintedBurger = false;
 		boolean isPrintedSides = false;
 		boolean isPrintedDrinks = false;
 		System.out.println("MENU");
 		System.out.println("-------------");
 
-
 		for (int i = 0; i < linesRead.size(); i++) {
-			
-			if(!isPrintedBurger) {
-				if (linesRead.get(i).get("Code").charAt(0) == 'B') { 
+
+			if (!isPrintedBurger) {
+				if (linesRead.get(i).get("Code").charAt(0) == 'B') {
 					System.out.println("BURGERS");
 					System.out.println("--------");
 					System.out.println("Item Code\t Name\t\t Price");
 					System.out.println("-------------------------------------------");
-					isPrintedBurger=true;
+					isPrintedBurger = true;
 				}
 			}
 			if (!isPrintedSides) {
@@ -167,30 +166,29 @@ public class DataLists implements IDataStore {
 		ArrayList<HashMap<String, String>> linesRead = menuInDictionary();
 		ArrayList<HashMap<String, String>> matchesItem = new ArrayList<HashMap<String, String>>();
 
-		int bestMatchScore = 0;
+		int keywordLength= keyword.length();
+		int minimumMatchScore = keywordLength < 2 ? keywordLength : 2;
 		for (int i = 0; i < linesRead.size(); i++) {
 			String item = linesRead.get(i).get("Name");
-			String cleanedItem = item.toLowerCase().trim();
+			String cleanedItem = item.toLowerCase().trim().replace(" ", "");
 			int matchScore = 0;
 			int keywordIndex = 0;
 			for (int j = 0; j < cleanedItem.length(); j++) {
 				if (cleanedItem.charAt(j) == keyword.charAt(keywordIndex)) {
 					matchScore++;
 					keywordIndex++;
-					if (keywordIndex == keyword.length()) {
+					if (keywordIndex == keywordLength) {
 						break;
 					}
 				}
 			}
-			if (matchScore > bestMatchScore) {
-				bestMatchScore = matchScore;
-				matchesItem.clear();
+			if (matchScore > minimumMatchScore) {
 				matchesItem.add(linesRead.get(i));
-			} 
+			}
 		}
 		return matchesItem;
 	}
-	
+
 	public void printKeywordMenu(String keywords) {
 		ArrayList<HashMap<String, String>> linesRead = findKeywords(keywords);
 		System.out.println("MENU");
