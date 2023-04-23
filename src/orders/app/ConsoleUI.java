@@ -93,9 +93,9 @@ public class ConsoleUI {
 				System.out.println();
 				System.out.println("Current username is already taken.");
 				System.out.print("Do you want to create another user profile? (Y/N): ");
-<<<<<<< Updated upstream
+
 				opt = scanner.nextLine().toUpperCase();
->>>>>>> Stashed changes
+
 			}
 			else
 			{	
@@ -103,11 +103,9 @@ public class ConsoleUI {
 				controller.createUser(username,password);
 				opt = "N";
 			}	
-<<<<<<< Updated upstream
+
 			}while(opt.equals("Y"));
-=======
-			}while(opt.toUpperCase().equals("Y"));
->>>>>>> Stashed changes
+
 		if (opt.equals("N"))
 		{	
 			System.out.println();
