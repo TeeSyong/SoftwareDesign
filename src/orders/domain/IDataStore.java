@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface IDataStore {
+	public boolean checkUserName(String username);
+	public boolean verifyLoign(String username,String password);
+	public void createUser(String userName,String password);
 	public int getNumberOfOrders();
 	public List<Order> getAllOrders();
 	public List<String> getOrderIdList();

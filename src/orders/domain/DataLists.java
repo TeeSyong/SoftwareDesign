@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.PrintWriter;
 
 public class DataLists implements IDataStore {
@@ -33,9 +35,99 @@ public class DataLists implements IDataStore {
 	// yl - "C:\\Users\\Huawei\\Desktop\\Software Testing & Software Design
 	// Eclipse\\Software Design
 	// Practical\\SoftwareDesign\\src\\orders\\file\\orders.txt"
-	// bong -
-	// alex -
+	// bong - C:\Users\bongq\Documents\GitHub\SoftwareDesign\src\orders\file\txt
+	// allex -
 	// -------------------------------------------------------------------------------
+	
+	//create User	
+	//function used in create user profile to check whether the username exists or not 
+	public boolean checkUserName(String username){
+	
+		 try {
+			 File myFile = new File("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt");
+			 Scanner reader = new Scanner (myFile);
+
+			 while (reader.hasNextLine())
+			 {
+				 String existUser = reader.nextLine();
+				 String[] tokens = existUser.split(",");
+				 
+				 if(tokens[1].equals(username))
+				 {
+					 return true;
+				 }
+			 }
+			 
+			 
+		 }
+		 catch(FileNotFoundException ex)
+		 {
+			 System.out.println("An error occurred.");
+		 }
+		 return false;
+	}
+	
+
+	//function used in create user profile to verify the username and password input by the user
+	public boolean verifyLoign(String username,String password)
+	{
+		
+		 try {
+			 File myFile = new File("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt");
+			 Scanner reader = new Scanner (myFile);
+			 while (reader.hasNextLine())
+			 {
+				 String existUser = reader.nextLine();
+				 String[] tokens = existUser.split(",");
+				  
+				 if(tokens[1].equals(username) && tokens[2].equals(password))
+				 {
+					 System.out.println("user login successful");
+					 return true;
+				 }
+			 }
+		 }
+		 catch(FileNotFoundException ex)
+		 {
+			 System.out.println("An error occurred.");
+		 }
+		 return false;
+	}
+
+	//function used in create user profile to create the user which write into txt file
+	public void createUser(String userName,String password)
+	{
+	    try {
+			int min = 10000000;  
+			int max = 100000000;
+			int memberID = (int) (Math.random()*(max-min+1)+min);
+			
+			File myFile = new File("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt");
+			FileWriter writer = new FileWriter("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt",true);
+			Scanner reader = new Scanner (myFile);
+			String user = null;
+			while (reader.hasNextLine())
+			{
+				String existUser = reader.nextLine();
+				String[] tokens = existUser.split(",");
+			
+				if(tokens[0].equals(Integer.toString(memberID)))
+				{
+					memberID = (int) (Math.random()*(max-min+1)+min);
+				}
+			}
+			    user = Integer.toString(memberID).concat(",").concat(userName).concat(",").concat(password);
+			    
+		        writer.write(user);
+		        writer.write("\n");
+		        writer.close();
+		        System.out.println("User profile created successfully.");
+		        System.out.println("Your member ID is:" + memberID);
+	      } catch (IOException ex) {
+	        System.out.println("An error occurred.");
+	      }
+	}
+	
 	public void openOrderFile() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";

@@ -21,7 +21,18 @@ public class Controller {
 	
 	//CREATE USER PROFILE 
 	
-	
+	public boolean checkUserName(String username)
+	{
+		return dataLists.checkUserName(username);
+	}
+	public boolean verifyLoign(String username,String password)
+	{
+		return dataLists.verifyLoign(username, password);
+	}
+	public void createUser(String userName,String password)
+	{
+		dataLists.createUser(userName, password);
+	}
 	
 	
 	//VIEW MENU
