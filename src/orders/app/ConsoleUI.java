@@ -130,9 +130,54 @@ public class ConsoleUI {
 	}
 	
 	//CREATE ORDER
-	
 	public void createOrder() {
-		
+		boolean repeat = false;
+		do {
+			System.out.println("CREATE ORDER");
+			System.out.println("-----------------");
+			System.out.print("Enter item code to order : ");
+			String itemCode = scanner.nextLine();
+			System.out.print("Enter quantity           : ");
+			int qtt = scanner.nextInt();
+			System.out.print("Enter remarks (- if none): ");
+			String remarks = scanner.nextLine();
+			
+			controller.createOrder();
+			
+			System.out.print("Add next item? (Y/N): ");
+			String addChoice = scanner.next().toUpperCase();
+			if(addChoice.equals("Y")) {
+				repeat = true;
+			} else if(addChoice.equals("N")) {
+				boolean invalidOption = false;
+				do {
+					System.out.println("1) Confirm order");
+					System.out.println("Cancel order");
+					System.out.println("Please enter your option: ");
+					int opt = scanner.nextInt();
+					switch(opt) {
+					case 1:
+						System.out.println("Order successfully added to system.");
+						String orderNum = controller.assignOrderNum();
+						System.out.println("Press Enter to return to main menu");
+						scanner.nextLine();
+						break;
+					case 2:
+						System.out.println("Order cancelled.");
+						System.out.println("Press Enter to return to main menu");
+						scanner.nextLine();
+						break;
+					default:
+						System.out.println("Invalid input. Please enter again.");
+						invalidOption = true;
+						break;
+					}
+				} while(invalidOption);
+			} else {
+				System.out.println("Invalid input. Please enter again.");
+				repeat = true;
+			}
+		} while(repeat);
 	}
 	
 	//VIEW ORDER
