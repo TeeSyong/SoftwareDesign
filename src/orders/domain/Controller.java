@@ -48,10 +48,17 @@ public class Controller {
 		dataLists.printOrder(orderId);
 	}
 	
-	public void updateItem(String orderId, String itemCode, int qtt, String remarks) {
-		dataLists.getOrderUpdateIdx(orderId, itemCode, qtt, remarks);
+	public void updateOrder(String orderId, String itemCode, int qtt, String remarks) {
+		dataLists.updateOrder(orderId, itemCode, qtt, remarks);
 	}
 	
+	public void deleteOrder(String orderId,String itemCode)	{
+		dataLists.deleteOrder(orderId, itemCode);
+	}
+	
+	public void addOrder(String orderId, String itemCode,int qtt, String remarks) {
+		dataLists.addOrder(orderId, itemCode, qtt, remarks);
+	}
 	
 	//VIEW INVOICE
 	public void viewinvoice() {

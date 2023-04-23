@@ -245,7 +245,6 @@ public class DataLists implements IDataStore {
 
 	public void printOrder(String orderId) {
 		int count = this.getNumberOfOrders();
-		List<Order> orders = this.getAllOrders();
 		Order aOrder;
 		System.out.println("Item Code\tName\tQtt\tRemarks");
 		System.out.println("-----------------------------------------------");
@@ -260,9 +259,8 @@ public class DataLists implements IDataStore {
 		System.out.println("\n");
 	}
 
-	public void modifyOrderFile() {
+	public void writeOrderFile() {
 		// write into order.txt text file; modifyOrderFile()
-		int count = this.getNumberOfOrders();
 
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
 		PrintWriter outputFile = null;
@@ -273,7 +271,7 @@ public class DataLists implements IDataStore {
 			System.out.println("Error opening the file " + fileName);
 			System.exit(0);
 		}
-		for (int k = 0; k < count; k++) {
+		for (int k = 0; k < orders.size(); k++) {
 			outputFile.println(
 					orders.get(k).getOrderId() + "," + orders.get(k).getItemCode() + "," + orders.get(k).getFoodName()
 							+ "," + orders.get(k).getQuantity() + "," + orders.get(k).getRemark());
@@ -282,14 +280,12 @@ public class DataLists implements IDataStore {
 
 	}
 
-	public void getOrderUpdateIdx(String orderId, String itemCode, int qtt, String remarks) {
-		// read order.txt file
+	public void updateOrder(String orderId, String itemCode, int qtt, String remarks) {
+
 		// update item
-		int count = getNumberOfOrders();
-		List<Order> orders = getAllOrders();
 		Order aOrder = null;
 
-		for (int i = 0; i < count; i++) {
+		for (int i = 0; i < orders.size(); i++) {
 			aOrder = orders.get(i);
 
 			if (orderId.equals(aOrder.getOrderId()) && itemCode.equals(aOrder.getItemCode())) {
@@ -297,7 +293,32 @@ public class DataLists implements IDataStore {
 				aOrder.setRemark(remarks);
 			}
 		}
-		modifyOrderFile();
+		writeOrderFile();
 	}
+	
+	public void deleteOrder(String orderId, String itemCode) {
+		// delete item
 
+		for (int i = 0; i < orders.size(); i++) {
+
+			if (orderId.equals(orders.get(i).getOrderId()) && itemCode.equals(orders.get(i).getItemCode())) {
+				orders.remove(i);
+			}
+		}
+		writeOrderFile();
+	}
+	
+	public void addOrder(String orderId, String itemCode,int qtt, String remarks) {
+		ArrayList<HashMap<String, String>> MenuArr = menuInDictionary();
+		String itemName=null;
+		for(int i=0;i<MenuArr.size();i++) {
+			if(itemCode.equals(MenuArr.get(i).get("Code"))) {
+				itemName=MenuArr.get(i).get("Name");
+			}
+		}
+		// add item
+		Order aOrder = new Order(orderId, itemCode, itemName, qtt, remarks);
+		orders.add(aOrder);
+		writeOrderFile();
+	}
 }

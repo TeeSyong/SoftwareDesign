@@ -34,7 +34,6 @@ public class ConsoleUI {
 			choice = scanner.nextInt();
 			// Clear ENTER key after integer input
 			String skip = scanner.nextLine();
-			System.out.println("\n");
 			while (choice < 1 || choice > 7) {
 				System.out.println("Invalid choice.");
 				System.out.print("Enter your choice (1-7): ");
@@ -138,8 +137,8 @@ public class ConsoleUI {
 	
 	//VIEW ORDER
 	public void viewOrder() {		
-		System.out.print("Enter order number: ");
-		String orderId = scanner.nextLine();
+
+		String orderId = getOrderIdInput();
 		//controller.openOrderFile();
 		controller.printOrder(orderId);
 		boolean invalidChoice = false;
@@ -162,40 +161,39 @@ public class ConsoleUI {
 						String codeToModify, remarksToModify;
 						int qttToModify;
 						
-						System.out.print("Enter item code to modify: ");
-						codeToModify = scanner.nextLine();
+						
+						codeToModify = getItemCodeInput();
 						System.out.print("Enter quantity           : ");
 						qttToModify = scanner.nextInt();
 						scanner.nextLine(); //skip
 						System.out.print("Enter remarks (- if none): ");
 						remarksToModify = scanner.nextLine();
 						
-						controller.updateItem(orderId, codeToModify, qttToModify, remarksToModify);
+						controller.updateOrder(orderId, codeToModify, qttToModify, remarksToModify);
 						controller.printOrder(orderId);
 						
 						
 						break;
 					case 2:
-						System.out.print("Enter item code to delete: ");
-						String codeToDel = scanner.nextLine();
+						String codeToDel =getItemCodeInput();
 						
-						//controller.deleteItem();
+						controller.deleteOrder(orderId, codeToDel);
 						controller.printOrder(orderId);
 						
 						break;
 					case 3:
 						controller.printMenu();
 						
-						System.out.print("Enter item code to order: ");
-						String codeToAdd = scanner.nextLine();
+						String codeToAdd = getItemCodeInput();
 						System.out.print("Enter quantity           : ");
 						int qttToAdd = scanner.nextInt();
 						scanner.nextLine(); //skip
 						System.out.print("Enter remarks (- if none): ");
 						String remarksToAdd = scanner.nextLine();
 						
-						//controller.addItem();
+						controller.addOrder(orderId,codeToAdd,qttToAdd,remarksToAdd);
 						controller.printOrder(orderId);
+						
 					
 						break;
 					default:
@@ -203,19 +201,19 @@ public class ConsoleUI {
 						invalidOperation = true;
 						break;
 					}
-				} while (invalidOperation);
-				
+					System.out.print("Do you want to modify your order? (Y/N): ");
+					choice = scanner.next().toUpperCase();
+				} while (invalidOperation || choice.equals("Y"));
+
 			} else if(choice.equals("N")) {
-				System.out.print("Press Enter to return to main menu");
+				System.out.println("Press Enter to return to main menu");
 				scanner.nextLine();
 			} else {
 				System.out.println("Invalid input. Please select again");
 				invalidChoice = true;
 			}
 
-			System.out.print("Do you want to modify your order? (Y/N): ");
-			choice = scanner.next().toUpperCase();
-		} while(invalidChoice || choice.equals("Y"));
+		} while(invalidChoice);
 		
 
 	}
@@ -318,6 +316,52 @@ public class ConsoleUI {
 			
 		}
 		orders.clear();
+		
+	}
+	
+	public String getOrderIdInput() {
+		List<Order> orders = controller.getAllOrders();
+		String orderId;
+		boolean isFound = false;
+		do {
+			System.out.print("Enter order number: ");
+			orderId = scanner.nextLine();
+			for(int i=0;i<orders.size();i++)
+			{
+				if(orderId.equals(orders.get(i).getOrderId())) {
+					isFound=true;
+					break;
+				}
+			}
+			
+			if(!isFound) {
+				System.out.println("No orders ID found");	
+			}
+		}while(!isFound);
+		return orderId;
+		
+	}
+	
+	public String getItemCodeInput() {
+		List<Order> orders = controller.getAllOrders();
+		String itemCode;
+		boolean isFound = false;
+		do {
+			System.out.print("Enter item code: ");
+			itemCode = scanner.nextLine();
+			for(int i=0;i<orders.size();i++)
+			{
+				if(!(itemCode.equals(orders.get(i).getItemCode()))) {
+					isFound=true;
+					break;
+				}
+			}
+			
+			if(!isFound) {
+				System.out.println("No item code found");	
+			}
+		}while(!isFound);
+		return itemCode;
 		
 	}
 }
