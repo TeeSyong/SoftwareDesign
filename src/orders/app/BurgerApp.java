@@ -7,6 +7,7 @@ public class BurgerApp {
 		IDataStore dataLists = new DataLists();
 		Controller controller = new Controller();
 		controller.setDataLists(dataLists);
+		controller.addOrderToList();
 		ConsoleUI userInterface = new ConsoleUI();
 		userInterface.setController(controller);
 		userInterface.start();

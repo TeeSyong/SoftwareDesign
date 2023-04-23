@@ -28,8 +28,11 @@ public class DataLists implements IDataStore {
 	// Put your text file under file folder (src->order->file)
 	// Write your file location here for further reference
 	// cz - "C:\\Github folder\\SoftwareDesign\\src\\orders\\file\\*.txt"
-	// sy -"D:\\Users\\Desktop\\SoftwareDesign\\SoftwareDesign\\src\\orders\\file\\menu.txt"
-	// yl - "C:\\Users\\Huawei\\Desktop\\Software Testing & Software Design Eclipse\\Software Design Practical\\SoftwareDesign\\src\\orders\\file\\orders.txt"
+	// sy
+	// -"D:\\Users\\Desktop\\SoftwareDesign\\SoftwareDesign\\src\\orders\\file\\menu.txt"
+	// yl - "C:\\Users\\Huawei\\Desktop\\Software Testing & Software Design
+	// Eclipse\\Software Design
+	// Practical\\SoftwareDesign\\src\\orders\\file\\orders.txt"
 	// bong -
 	// alex -
 	// -------------------------------------------------------------------------------
@@ -56,6 +59,7 @@ public class DataLists implements IDataStore {
 			anOrder = new Order(strArray[0], strArray[1], strArray[2], Integer.parseInt(strArray[3]), strArray[4]);
 			orders.add(anOrder);
 		}
+		inputStream.close();
 	}
 
 	public int getNumberOfOrders() {
@@ -96,6 +100,7 @@ public class DataLists implements IDataStore {
 			String[] tokens = singleLine.split(",");
 			linesRead.add(tokens);
 		}
+		inputStream.close();
 
 		return linesRead;
 	}
@@ -166,7 +171,7 @@ public class DataLists implements IDataStore {
 		ArrayList<HashMap<String, String>> linesRead = menuInDictionary();
 		ArrayList<HashMap<String, String>> matchesItem = new ArrayList<HashMap<String, String>>();
 
-		int keywordLength= keyword.length();
+		int keywordLength = keyword.length();
 		int minimumMatchScore = keywordLength < 2 ? keywordLength : 2;
 		for (int i = 0; i < linesRead.size(); i++) {
 			String item = linesRead.get(i).get("Name");
@@ -203,74 +208,96 @@ public class DataLists implements IDataStore {
 
 		}
 	}
-	
+
 	// View Order Code
-	public void modifyOrderFile() {
-		
+
+	// For Yee Lin view order temporarily use purpose :)
+	public ArrayList<String[]> openOrderFileV2() {
+		ArrayList<String[]> linesRead = new ArrayList<String[]>();
+		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
+		;
+		Scanner inputStream = null;
+		try {
+			inputStream = new Scanner(new File(fileName));
+		} catch (FileNotFoundException e) {
+			System.out.println("Error opening the file " + fileName);
+			System.exit(0);
+		}
+
+		while (inputStream.hasNextLine()) {
+			String singleLine = inputStream.nextLine();
+			String[] tokens = singleLine.split(",");
+			linesRead.add(tokens);
+		}
+		inputStream.close();
+		return linesRead;
+	}
+
+	public void addOrderToList() {
+		ArrayList<String[]> linesRead = new ArrayList<String[]>();
+		linesRead = openOrderFileV2();
+		Order anOrder;
+		for (String[] strArray : linesRead) {
+			anOrder = new Order(strArray[0], strArray[1], strArray[2], Integer.parseInt(strArray[3]), strArray[4]);
+			orders.add(anOrder);
+		}
 	}
 
 	public void printOrder(String orderId) {
 		int count = this.getNumberOfOrders();
 		List<Order> orders = this.getAllOrders();
-		Order aOrder; 
+		Order aOrder;
 		System.out.println("Item Code\tName\tQtt\tRemarks");
 		System.out.println("-----------------------------------------------");
-		for(int i =0; i < count; i++) {
+		for (int i = 0; i < count; i++) {
 			aOrder = orders.get(i);
-			
-			if(orderId.equals(aOrder.getOrderId())) {
-				System.out.printf("%s\t\t%-20s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
-						, aOrder.getQuantity(), aOrder.getRemark());
+
+			if (orderId.equals(aOrder.getOrderId())) {
+				System.out.printf("%s\t\t%-20s\t%d\t%s\n", aOrder.getItemCode(), aOrder.getFoodName(),
+						aOrder.getQuantity(), aOrder.getRemark());
 			}
 		}
 		System.out.println("\n");
 	}
-	
-	public void updateItem(String orderId, String itemCode, int qtt, String remarks) {
-		//read order.txt file		
-		this.openOrderFile();
-		
-		//update item
+
+	public void modifyOrderFile() {
+		// write into order.txt text file; modifyOrderFile()
 		int count = this.getNumberOfOrders();
-		List<Order> orders = this.getAllOrders();
-		Order aOrder = null; 
-		int updateItmIdx = 0;
-		
-		for(int i =0; i < count; i++) {
-			aOrder = orders.get(i);
-			
-			if(orderId.equals(aOrder.getOrderId())) {
-				if(itemCode.equals(aOrder.getItemCode())) {
-					aOrder.setQuantity(qtt);
-					aOrder.setRemark(remarks);
-					updateItmIdx = i;
-					
-					//write into order.txt text file; modifyOrderFile()
-					for(int j = 0; j < count; i++) {
-						orders.set(updateItmIdx, aOrder);
-						String fileName = System.getProperty("user.dir")+"\\src\\orders\\file\\order.txt";;
-						PrintWriter outputFile = null;
-						try {
-							outputFile = new PrintWriter(fileName);
-						} catch (FileNotFoundException e) {
-							
-								System.out.println("Error opening the file " + fileName);
-								System.exit(0);
-						}
-						for(int k = 0; k < count; k++) {
-							outputFile.println(orders.get(k));
-			
-						}
-						outputFile.close();
-					}
-				}
-			}	
-		
-		
-			
+
+		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
+		PrintWriter outputFile = null;
+		try {
+			outputFile = new PrintWriter(fileName);
+		} catch (FileNotFoundException e) {
+
+			System.out.println("Error opening the file " + fileName);
+			System.exit(0);
 		}
+		for (int k = 0; k < count; k++) {
+			outputFile.println(
+					orders.get(k).getOrderId() + "," + orders.get(k).getItemCode() + "," + orders.get(k).getFoodName()
+							+ "," + orders.get(k).getQuantity() + "," + orders.get(k).getRemark());
+		}
+		outputFile.close();
+
 	}
-	
-	
-	
+
+	public void getOrderUpdateIdx(String orderId, String itemCode, int qtt, String remarks) {
+		// read order.txt file
+		// update item
+		int count = getNumberOfOrders();
+		List<Order> orders = getAllOrders();
+		Order aOrder = null;
+
+		for (int i = 0; i < count; i++) {
+			aOrder = orders.get(i);
+
+			if (orderId.equals(aOrder.getOrderId()) && itemCode.equals(aOrder.getItemCode())) {
+				aOrder.setQuantity(qtt);
+				aOrder.setRemark(remarks);
+			}
+		}
+		modifyOrderFile();
+	}
+
 }

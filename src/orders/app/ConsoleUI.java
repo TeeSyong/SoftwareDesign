@@ -140,7 +140,7 @@ public class ConsoleUI {
 	public void viewOrder() {		
 		System.out.print("Enter order number: ");
 		String orderId = scanner.nextLine();
-		controller.openOrderFile();
+		//controller.openOrderFile();
 		controller.printOrder(orderId);
 		boolean invalidChoice = false;
 		String choice;

@@ -1,0 +1,10 @@
+OD04,BG01,Beef Burger,2,-
+OD03,BG02,Mash potato,3,Large
+OD02,BG03,Orange juice,2,Add more ice
+OD03,BG04,chicken Burger,1,-
+OD04,BG05,Fries,5,small
+OD02,BG06,Coke,3,less ice
+OD01,BG07,Fanta,610,Hot like 610
+OD02,BG08,egg Burger,2,-
+OD04,BG09,Cheezy wedgets,1,medium pls
+OD01,BG10,Sprite,3,Add more ice

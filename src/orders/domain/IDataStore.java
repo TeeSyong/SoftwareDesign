@@ -12,5 +12,7 @@ public interface IDataStore {
 	public void printMenu();
 	public void printKeywordMenu(String keywords);
 	public void printOrder(String orderId);
-	public void updateItem(String orderId, String itemCode, int qtt, String remarks);
+	public void getOrderUpdateIdx(String orderId, String itemCode, int qtt, String remarks);
+	public ArrayList<String[]>  openOrderFileV2();
+	public void addOrderToList();
 }

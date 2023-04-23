@@ -40,12 +40,16 @@ public class Controller {
 	
 	
 	//VIEW ORDER
+	
+	public void addOrderToList() {
+		dataLists.addOrderToList();
+	}
 	public void printOrder(String orderId) {
 		dataLists.printOrder(orderId);
 	}
 	
 	public void updateItem(String orderId, String itemCode, int qtt, String remarks) {
-		dataLists.updateItem(orderId, itemCode, qtt, remarks);
+		dataLists.getOrderUpdateIdx(orderId, itemCode, qtt, remarks);
 	}
 	
 	
