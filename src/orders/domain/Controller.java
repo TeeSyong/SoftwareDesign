@@ -25,8 +25,15 @@ public class Controller {
 	
 	
 	//VIEW MENU
+	public void printMenu()
+	{
+		dataLists.printMenu();
+	}
 	
-	
+	public void printKeywordMenu(String keywords) {
+		dataLists.printKeywordMenu(keywords);
+	}
+
 	
 	//CREATE ORDER
 	
@@ -34,7 +41,24 @@ public class Controller {
 	
 	//VIEW ORDER
 	
+	public void addOrderToList() {
+		dataLists.addOrderToList();
+	}
+	public void printOrder(String orderId) {
+		dataLists.printOrder(orderId);
+	}
 	
+	public void updateOrder(String orderId, String itemCode, int qtt, String remarks) {
+		dataLists.updateOrder(orderId, itemCode, qtt, remarks);
+	}
+	
+	public void deleteOrder(String orderId,String itemCode)	{
+		dataLists.deleteOrder(orderId, itemCode);
+	}
+	
+	public void addOrder(String orderId, String itemCode,int qtt, String remarks) {
+		dataLists.addOrder(orderId, itemCode, qtt, remarks);
+	}
 	
 	//VIEW INVOICE
 	public void viewinvoice() {
