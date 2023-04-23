@@ -44,7 +44,8 @@ public class DataLists implements IDataStore {
 	public boolean checkUserName(String username){
 	
 		 try {
-			 File myFile = new File("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt");
+			 String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
+			 File myFile =  new File(fileName);
 			 Scanner reader = new Scanner (myFile);
 
 			 while (reader.hasNextLine())
@@ -73,7 +74,8 @@ public class DataLists implements IDataStore {
 	{
 		
 		 try {
-			 File myFile = new File("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt");
+			 String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
+			 File myFile = new File(fileName);
 			 Scanner reader = new Scanner (myFile);
 			 while (reader.hasNextLine())
 			 {
@@ -101,9 +103,10 @@ public class DataLists implements IDataStore {
 			int min = 10000000;  
 			int max = 100000000;
 			int memberID = (int) (Math.random()*(max-min+1)+min);
+			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
 			
-			File myFile = new File("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt");
-			FileWriter writer = new FileWriter("C:\\Users\\bongq\\Documents\\GitHub\\SoftwareDesign\\src\\orders\\file\\user.txt",true);
+			File myFile = new File(fileName);
+			FileWriter writer = new FileWriter(fileName,true);
 			Scanner reader = new Scanner (myFile);
 			String user = null;
 			while (reader.hasNextLine())
