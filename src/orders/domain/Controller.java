@@ -40,7 +40,13 @@ public class Controller {
 	
 	
 	//VIEW ORDER
+	public void printOrder(String orderId) {
+		dataLists.printOrder(orderId);
+	}
 	
+	public void updateItem(String orderId, String itemCode, int qtt, String remarks) {
+		dataLists.updateItem(orderId, itemCode, qtt, remarks);
+	}
 	
 	
 	//VIEW INVOICE

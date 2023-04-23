@@ -39,7 +39,15 @@ public class Order {
 		return quantity;
 	}
 	
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	
 	public String getRemark() {
 		return remark;
+	}
+	
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

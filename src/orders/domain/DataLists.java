@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 public class DataLists implements IDataStore {
 
@@ -28,7 +29,7 @@ public class DataLists implements IDataStore {
 	// Write your file location here for further reference
 	// cz - "C:\\Github folder\\SoftwareDesign\\src\\orders\\file\\*.txt"
 	// sy -"D:\\Users\\Desktop\\SoftwareDesign\\SoftwareDesign\\src\\orders\\file\\menu.txt"
-	// yl -
+	// yl - "C:\\Users\\Huawei\\Desktop\\Software Testing & Software Design Eclipse\\Software Design Practical\\SoftwareDesign\\src\\orders\\file\\orders.txt"
 	// bong -
 	// alex -
 	// -------------------------------------------------------------------------------
@@ -204,5 +205,74 @@ public class DataLists implements IDataStore {
 
 		}
 	}
+	
+	// View Order Code
+	public void modifyOrderFile() {
+		
+	}
 
+	public void printOrder(String orderId) {
+		int count = this.getNumberOfOrders();
+		List<Order> orders = this.getAllOrders();
+		Order aOrder; 
+		System.out.println("Item Code\tName\tQtt\tRemarks");
+		System.out.println("-----------------------------------------------");
+		for(int i =0; i < count; i++) {
+			aOrder = orders.get(i);
+			
+			if(orderId.equals(aOrder.getOrderId())) {
+				System.out.printf("%s\t\t%-20s\t%d\t%s\n",aOrder.getItemCode(),aOrder.getFoodName()
+						, aOrder.getQuantity(), aOrder.getRemark());
+			}
+		}
+		System.out.println("\n");
+	}
+	
+	public void updateItem(String orderId, String itemCode, int qtt, String remarks) {
+		//read order.txt file		
+		this.openOrderFile();
+		
+		//update item
+		int count = this.getNumberOfOrders();
+		List<Order> orders = this.getAllOrders();
+		Order aOrder = null; 
+		int updateItmIdx = 0;
+		
+		for(int i =0; i < count; i++) {
+			aOrder = orders.get(i);
+			
+			if(orderId.equals(aOrder.getOrderId())) {
+				if(itemCode.equals(aOrder.getItemCode())) {
+					aOrder.setQuantity(qtt);
+					aOrder.setRemark(remarks);
+					updateItmIdx = i;
+					
+					//write into order.txt text file; modifyOrderFile()
+					for(int j = 0; j < count; i++) {
+						orders.set(updateItmIdx, aOrder);
+						String fileName = System.getProperty("user.dir")+"\\src\\orders\\file\\order.txt";;
+						PrintWriter outputFile = null;
+						try {
+							outputFile = new PrintWriter(fileName);
+						} catch (FileNotFoundException e) {
+							
+								System.out.println("Error opening the file " + fileName);
+								System.exit(0);
+						}
+						for(int k = 0; k < count; k++) {
+							outputFile.println(orders.get(k));
+			
+						}
+						outputFile.close();
+					}
+				}
+			}	
+		
+		
+			
+		}
+	}
+	
+	
+	
 }

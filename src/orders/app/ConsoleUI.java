@@ -63,6 +63,7 @@ public class ConsoleUI {
 				checkOrder();
 				break;
 			case 7:
+				System.out.println("Terminating system...");
 				break;
 			}
 			System.out.println();
@@ -136,13 +137,11 @@ public class ConsoleUI {
 	}
 	
 	//VIEW ORDER
-	
-	
-	public void viewOrder() {
-		
+	public void viewOrder() {		
 		System.out.print("Enter order number: ");
 		String orderId = scanner.nextLine();
-		//controller.printOrder();
+		controller.openOrderFile();
+		controller.printOrder(orderId);
 		boolean invalidChoice = false;
 		String choice;
 		System.out.print("Do you want to modify your order? (Y/N): ");
@@ -163,39 +162,40 @@ public class ConsoleUI {
 						String codeToModify, remarksToModify;
 						int qttToModify;
 						
-						System.out.println("Enter item code to modify: ");
+						System.out.print("Enter item code to modify: ");
 						codeToModify = scanner.nextLine();
-						System.out.println("Enter quantity           : ");
+						System.out.print("Enter quantity           : ");
 						qttToModify = scanner.nextInt();
 						scanner.nextLine(); //skip
-						System.out.println("Enter remarks (- if none): ");
+						System.out.print("Enter remarks (- if none): ");
 						remarksToModify = scanner.nextLine();
 						
-						//controller.updateItem();
-						//controller.printOrder();
-
+						controller.updateItem(orderId, codeToModify, qttToModify, remarksToModify);
+						controller.printOrder(orderId);
+						
+						
 						break;
 					case 2:
 						System.out.print("Enter item code to delete: ");
 						String codeToDel = scanner.nextLine();
 						
 						//controller.deleteItem();
-						//controller.printOrder();
+						controller.printOrder(orderId);
 						
 						break;
 					case 3:
-						//controller.printMenu();
+						controller.printMenu();
 						
-						System.out.println("Enter item code to order: ");
+						System.out.print("Enter item code to order: ");
 						String codeToAdd = scanner.nextLine();
-						System.out.println("Enter quantity           : ");
+						System.out.print("Enter quantity           : ");
 						int qttToAdd = scanner.nextInt();
 						scanner.nextLine(); //skip
-						System.out.println("Enter remarks (- if none): ");
+						System.out.print("Enter remarks (- if none): ");
 						String remarksToAdd = scanner.nextLine();
 						
 						//controller.addItem();
-						//controller.printMenu();
+						controller.printOrder(orderId);
 					
 						break;
 					default:
