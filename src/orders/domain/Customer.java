@@ -1,5 +1,12 @@
 package orders.domain;
 
+import java.io.File;  // Import the File class
+import java.io.FileNotFoundException;  // Import this class to handle errors
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class Customer {
 	private String address;
 	private int userId;
@@ -18,21 +25,6 @@ public class Customer {
 		return registryDate;
 	}
 
-	//function used in create user profile to check whether the username exists or not 
-	public void checkUserName(){
 
-	}
-
-	//function used in create user profile to verify the username and password input by the user
-	public void verifyLoign()
-	{
-
-	}
-
-	//function used in create user profile to create the user which write into txt file
-	public void createUser(String userName,String password)
-	{
-
-	}
 
 }
