@@ -1,0 +1,10 @@
+BG01,Chicken Burger,9.00
+BG02,Fish Burger,8.00
+BG03,Beef Burger,10.00
+SD01,French Fries,5.00
+SD02,Ice Cream,2.00
+SD03,Crispy Nuggets,6.00
+DR01,Fanta Juice,4.00
+DR02,Coke Drink,3.50
+DR03,Sky Juice,1.50
+DR04,Sprite Drink,3.00
