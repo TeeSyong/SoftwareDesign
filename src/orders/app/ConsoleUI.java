@@ -82,35 +82,39 @@ public class ConsoleUI {
 	//VIEW MENU
 	
 	public void viewMenu() {
-		System.out.println("MENU");
-		System.out.println("-------------------------------------");
 		controller.printMenu();
 		
 		boolean searchChoiceInvalid;
+		boolean searchAgain;
 		do {
 			searchChoiceInvalid = false;
+			searchAgain = false;
+			
 			System.out.print("Do you want to search items in menu? (Y/N): ");
 			String searchChoice = scanner.nextLine().toUpperCase();
 			
 			if(searchChoice.equals("Y")) {
 				System.out.print("Enter keyword or phrases to search: ");
 				String keywords = scanner.nextLine().toLowerCase();
+				System.out.println();
 				controller.printKeywordMenu(keywords);
-
+				searchAgain = true;
+			}
+			
 				
-			} else if(searchChoice.equals("N")) {
+			else if(searchChoice.equals("N")) {
 				break;
 				
 			} else {
 				System.out.println("Input error. Please enter again.");
 				searchChoiceInvalid = true;
 			}
-		} while(searchChoiceInvalid);
+		} while(searchChoiceInvalid || searchAgain);
 		
 		boolean orderChoiceInvalid;
 		do {
 			orderChoiceInvalid = false;
-			System.out.print("Do you want to make order? (Y/N): ");
+			System.out.print("\nDo you want to make order? (Y/N): ");
 			String orderChoice = scanner.nextLine().toUpperCase();
 			
 			if(orderChoice.equals("Y")) {
