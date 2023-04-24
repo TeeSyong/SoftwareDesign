@@ -390,7 +390,7 @@ public class DataLists implements IDataStore {
 	public ArrayList<String[]> openOrderFileV2() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
-		;
+		
 		Scanner inputStream = null;
 		try {
 			inputStream = new Scanner(new File(fileName));
@@ -499,23 +499,51 @@ public class DataLists implements IDataStore {
 
 	// view invoice code
 	public void readFromFile(ArrayList<ArrayList<String>> itemsList, String orderNum) {
+		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
 		try {
-			File myObj = new File("textfile.txt"); //no current text file with price
+			File myObj = new File(fileName); 
 			Scanner myReader = new Scanner(myObj);
-			// assumption : data format "123 BG03 Beef Burger 1 - 10.00 10.00"
+			String[] Input = new String[7];
+			
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
-				String[] Input = data.split("\t");
-				ArrayList<String> datalist = new ArrayList<>();
-				if (Input.length > 0 && Input[0].equals(orderNum)) {
-					// Add remaining data to ArrayList
-					for (String input : Input) {
-						datalist.add(input);
+				
+				Input = data.split("\t");
+				
+				String itemCode = Input[1];
+				int qtt = Integer.parseInt(Input[3]);
+				
+				//read menu.txt
+				ArrayList<String[]> menuLinesRead = readMenu();
+				
+				//get unit price based on item code
+				// menuLinesRead = ["BG01","Chicken Burger","9.00"],[],[]
+				double unitPrice = 0;
+				for(int i = 0; i < menuLinesRead.size(); i++) {
+					if(itemCode.equals(menuLinesRead.get(i)[0])) {
+						unitPrice = Double.parseDouble(menuLinesRead.get(i)[2]);
 					}
 				}
-				itemsList.add(datalist);
+				
+				//calculate total price (unit price * quantity)
+				double totalPrice = unitPrice * qtt;
+				
+				//addPriceToInput(String[] Input);
+				
+				Input[6] = Double.toString(unitPrice);
+				Input[7] = Double.toString(totalPrice);
 			}
-
+				
+				
+			ArrayList<String> datalist = new ArrayList<>();
+			if (Input.length > 0 && Input[0].equals(orderNum)) {
+				// Add remaining data to ArrayList
+				for (String input : Input) {
+					datalist.add(input);
+				}
+			}
+				itemsList.add(datalist);
+			
 			myReader.close();
 
 		} catch (FileNotFoundException e) {
@@ -523,6 +551,8 @@ public class DataLists implements IDataStore {
 			e.printStackTrace();
 		}
 	}
+
+	
 
 	public double sumValue(ArrayList<ArrayList<String>> itemsList) {
 		double total = 0;

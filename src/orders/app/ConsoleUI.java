@@ -198,7 +198,13 @@ public class ConsoleUI {
 
 	// VIEW ORDER
 	public void viewOrder() {
-
+		List<String> orderIdList = controller.getOrderIdList();
+		System.out.println("Order ID\n--------");
+		for (int i = 0; i < orderIdList.size(); i++) {
+			System.out.println(orderIdList.get(i));
+		}
+		System.out.println("\n");
+		
 		String orderId = getOrderIdInput();
 		// controller.openOrderFile();
 		controller.printOrder(orderId);
@@ -280,6 +286,13 @@ public class ConsoleUI {
 
 		ArrayList<ArrayList<String>> itemsList = new ArrayList();
 
+		List<String> orderIdList = controller.getOrderIdList();
+		System.out.println("Order ID\n--------");
+		for (int i = 0; i < orderIdList.size(); i++) {
+			System.out.println(orderIdList.get(i));
+		}
+		System.out.println("\n");
+		
 		System.out.print("Enter order number:");
 		String orderNum = scanner.nextLine();
 
