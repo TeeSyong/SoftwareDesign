@@ -17,9 +17,9 @@ public class DataLists implements IDataStore {
 	private List<Item> items;
 
 	private List<Order> orders;
-	
+
 	private List<Order> tempOrders;
-	
+
 	private List<String> orderIdList;
 
 	public DataLists() {
@@ -27,11 +27,8 @@ public class DataLists implements IDataStore {
 		items = new ArrayList<Item>();
 		orders = new ArrayList<Order>();
 		orderIdList = new ArrayList<String>();
-<<<<<<< Updated upstream
 		tempOrders = new ArrayList<Order>();
-=======
 
->>>>>>> Stashed changes
 	}
 
 	// -------------------------------------------------------------------------------
@@ -46,99 +43,88 @@ public class DataLists implements IDataStore {
 	// bong - C:\Users\bongq\Documents\GitHub\SoftwareDesign\src\orders\file\txt
 	// allex -
 	// -------------------------------------------------------------------------------
-	
-	//create User	
-	//function used in create user profile to check whether the username exists or not 
-	public boolean checkUserName(String username){
-	
-		 try {
-			 String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
-			 File myFile =  new File(fileName);
-			 Scanner reader = new Scanner (myFile);
 
-			 while (reader.hasNextLine())
-			 {
-				 String existUser = reader.nextLine();
-				 String[] tokens = existUser.split(",");
-				 
-				 if(tokens[1].equals(username))
-				 {
-					 return true;
-				 }
-			 }
-			 
-			 
-		 }
-		 catch(FileNotFoundException ex)
-		 {
-			 System.out.println("An error occurred.");
-		 }
-		 return false;
-	}
-	
+	// create User
+	// function used in create user profile to check whether the username exists or
+	// not
+	public boolean checkUserName(String username) {
 
-	//function used in create user profile to verify the username and password input by the user
-	public boolean verifyLoign(String username,String password)
-	{
-		
-		 try {
-			 String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
-			 File myFile = new File(fileName);
-			 Scanner reader = new Scanner (myFile);
-			 while (reader.hasNextLine())
-			 {
-				 String existUser = reader.nextLine();
-				 String[] tokens = existUser.split(",");
-				  
-				 if(tokens[1].equals(username) && tokens[2].equals(password))
-				 {
-					 System.out.println("user login successful");
-					 return true;
-				 }
-			 }
-		 }
-		 catch(FileNotFoundException ex)
-		 {
-			 System.out.println("An error occurred.");
-		 }
-		 return false;
-	}
-
-	//function used in create user profile to create the user which write into txt file
-	public void createUser(String userName,String password)
-	{
-	    try {
-			int min = 10000000;  
-			int max = 100000000;
-			int memberID = (int) (Math.random()*(max-min+1)+min);
+		try {
 			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
-			
 			File myFile = new File(fileName);
-			FileWriter writer = new FileWriter(fileName,true);
-			Scanner reader = new Scanner (myFile);
-			String user = null;
-			while (reader.hasNextLine())
-			{
+			Scanner reader = new Scanner(myFile);
+
+			while (reader.hasNextLine()) {
 				String existUser = reader.nextLine();
 				String[] tokens = existUser.split(",");
-			
-				if(tokens[0].equals(Integer.toString(memberID)))
-				{
-					memberID = (int) (Math.random()*(max-min+1)+min);
+
+				if (tokens[1].equals(username)) {
+					return true;
 				}
 			}
-			    user = Integer.toString(memberID).concat(",").concat(userName).concat(",").concat(password);
-			    
-		        writer.write(user);
-		        writer.write("\n");
-		        writer.close();
-		        System.out.println("User profile created successfully.");
-		        System.out.println("Your member ID is:" + memberID);
-	      } catch (IOException ex) {
-	        System.out.println("An error occurred.");
-	      }
+
+		} catch (FileNotFoundException ex) {
+			System.out.println("An error occurred.");
+		}
+		return false;
 	}
-	
+
+	// function used in create user profile to verify the username and password
+	// input by the user
+	public boolean verifyLoign(String username, String password) {
+
+		try {
+			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
+			File myFile = new File(fileName);
+			Scanner reader = new Scanner(myFile);
+			while (reader.hasNextLine()) {
+				String existUser = reader.nextLine();
+				String[] tokens = existUser.split(",");
+
+				if (tokens[1].equals(username) && tokens[2].equals(password)) {
+					System.out.println("user login successful");
+					return true;
+				}
+			}
+		} catch (FileNotFoundException ex) {
+			System.out.println("An error occurred.");
+		}
+		return false;
+	}
+
+	// function used in create user profile to create the user which write into txt
+	// file
+	public void createUser(String userName, String password) {
+		try {
+			int min = 10000000;
+			int max = 100000000;
+			int memberID = (int) (Math.random() * (max - min + 1) + min);
+			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
+
+			File myFile = new File(fileName);
+			FileWriter writer = new FileWriter(fileName, true);
+			Scanner reader = new Scanner(myFile);
+			String user = null;
+			while (reader.hasNextLine()) {
+				String existUser = reader.nextLine();
+				String[] tokens = existUser.split(",");
+
+				if (tokens[0].equals(Integer.toString(memberID))) {
+					memberID = (int) (Math.random() * (max - min + 1) + min);
+				}
+			}
+			user = Integer.toString(memberID).concat(",").concat(userName).concat(",").concat(password);
+
+			writer.write(user);
+			writer.write("\n");
+			writer.close();
+			System.out.println("User profile created successfully.");
+			System.out.println("Your member ID is:" + memberID);
+		} catch (IOException ex) {
+			System.out.println("An error occurred.");
+		}
+	}
+
 	public void openOrderFile() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
@@ -312,79 +298,74 @@ public class DataLists implements IDataStore {
 		}
 	}
 
-	//create order
-	public void createTempOrder(String itemCode,int quantity,String remark)
-	{
+	// create order
+	public void createTempOrder(String itemCode, int quantity, String remark) {
 		String menuFile = System.getProperty("user.dir") + "\\src\\orders\\file\\menu.txt";
-		File myMenu =  new File(menuFile);
+		File myMenu = new File(menuFile);
 
-		String orderId,foodName = null;
+		String orderId, foodName = null;
 
 		Scanner reader;
 		try {
 
-			reader = new Scanner (myMenu);
-			while(reader.hasNextLine()){
+			reader = new Scanner(myMenu);
+			while (reader.hasNextLine()) {
 				String menu = reader.nextLine();
-				String [] tokens = menu.split(",");
-				if(tokens[0].equals(itemCode))
-				{
+				String[] tokens = menu.split(",");
+				if (tokens[0].equals(itemCode)) {
 					foodName = tokens[1];
 				}
 			}
 
-			
-			Order anOrder = new Order(itemCode,foodName,quantity,remark);
+			Order anOrder = new Order(itemCode, foodName, quantity, remark);
 			tempOrders.add(anOrder);
 			System.out.println("\nItem Code\tName\t\tQty\t\tRemarks");
 			System.out.println("----------------------------------------");
-			for(int i=0;i<tempOrders.size();i++)
-			{
-				System.out.println(tempOrders.get(i).getItemCode()+"\t\t"+tempOrders.get(i).getFoodName()+"\t"+tempOrders.get(i).getQuantity()+"\t\t"+tempOrders.get(i).getRemark());
+			for (int i = 0; i < tempOrders.size(); i++) {
+				System.out.println(tempOrders.get(i).getItemCode() + "\t\t" + tempOrders.get(i).getFoodName() + "\t"
+						+ tempOrders.get(i).getQuantity() + "\t\t" + tempOrders.get(i).getRemark());
 			}
 		} catch (FileNotFoundException e) {
 
 			e.printStackTrace();
 		}
 	}
-	public void createOrder()
-	{
-		try
-		{
-		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
-		File myFile =  new File(fileName);
-		FileWriter writer;
-		writer = new FileWriter(fileName,true);
-		
-		int highestIdNum =0;
-		String orderId = null;
-		ArrayList <Integer> id = new ArrayList<Integer>();
-		
-		Scanner reader;
-		reader = new Scanner (myFile);
-			while (reader.hasNextLine())
-			{
+
+	public void createOrder() {
+		try {
+			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
+			File myFile = new File(fileName);
+			FileWriter writer;
+			writer = new FileWriter(fileName, true);
+
+			int highestIdNum = 0;
+			String orderId = null;
+			ArrayList<Integer> id = new ArrayList<Integer>();
+
+			Scanner reader;
+			reader = new Scanner(myFile);
+			while (reader.hasNextLine()) {
 				String order = reader.nextLine();
 				String[] tokens = order.split(",");
-				int idNum = Integer.parseInt(tokens[0].replace("OD",""));
+				int idNum = Integer.parseInt(tokens[0].replace("OD", ""));
 				id.add(idNum);
-				highestIdNum = Collections.max(id);	
+				highestIdNum = Collections.max(id);
 			}
-			
-			if(highestIdNum+1<10)
-			{
-				orderId = "OD0".concat(Integer.toString(highestIdNum+1));
-			}
-			else
-			{
-				orderId = "OD".concat(Integer.toString(highestIdNum+1));
+
+			if (highestIdNum + 1 < 10) {
+				orderId = "OD0".concat(Integer.toString(highestIdNum + 1));
+			} else {
+				orderId = "OD".concat(Integer.toString(highestIdNum + 1));
 			}
 			Order anOrder;
-			for(int i =0;i<tempOrders.size();i++)
-			{
-				anOrder = new Order(orderId,tempOrders.get(i).getItemCode(),tempOrders.get(i).getFoodName(),tempOrders.get(i).getQuantity(),tempOrders.get(i).getRemark());
+			for (int i = 0; i < tempOrders.size(); i++) {
+				anOrder = new Order(orderId, tempOrders.get(i).getItemCode(), tempOrders.get(i).getFoodName(),
+						tempOrders.get(i).getQuantity(), tempOrders.get(i).getRemark());
 				orders.add(anOrder);
-				String order = orderId.concat(",").concat(tempOrders.get(i).getItemCode()).concat(",").concat(tempOrders.get(i).getFoodName()).concat(",").concat(Integer.toString(tempOrders.get(i).getQuantity())).concat(",").concat(tempOrders.get(i).getRemark());
+				String order = orderId.concat(",").concat(tempOrders.get(i).getItemCode()).concat(",")
+						.concat(tempOrders.get(i).getFoodName()).concat(",")
+						.concat(Integer.toString(tempOrders.get(i).getQuantity())).concat(",")
+						.concat(tempOrders.get(i).getRemark());
 				writer.write(order);
 				writer.write("\n");
 
@@ -392,8 +373,8 @@ public class DataLists implements IDataStore {
 			writer.close();
 
 			System.out.println("Order successfully added to system.");
-			System.out.println("Your order number is "+orderId);
-			
+			System.out.println("Your order number is " + orderId);
+
 		} catch (FileNotFoundException ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
@@ -402,7 +383,7 @@ public class DataLists implements IDataStore {
 			ex.printStackTrace();
 		}
 	}
-	
+
 	// View Order Code
 
 	// For Yee Lin view order use purpose :)
@@ -489,7 +470,7 @@ public class DataLists implements IDataStore {
 		}
 		writeOrderFile();
 	}
-	
+
 	public void deleteOrder(String orderId, String itemCode) {
 		// delete item
 
@@ -501,18 +482,66 @@ public class DataLists implements IDataStore {
 		}
 		writeOrderFile();
 	}
-	
-	public void addOrder(String orderId, String itemCode,int qtt, String remarks) {
+
+	public void addOrder(String orderId, String itemCode, int qtt, String remarks) {
 		ArrayList<HashMap<String, String>> MenuArr = menuInDictionary();
-		String itemName=null;
-		for(int i=0;i<MenuArr.size();i++) {
-			if(itemCode.equals(MenuArr.get(i).get("Code"))) {
-				itemName=MenuArr.get(i).get("Name");
+		String itemName = null;
+		for (int i = 0; i < MenuArr.size(); i++) {
+			if (itemCode.equals(MenuArr.get(i).get("Code"))) {
+				itemName = MenuArr.get(i).get("Name");
 			}
 		}
 		// add item
 		Order aOrder = new Order(orderId, itemCode, itemName, qtt, remarks);
 		orders.add(aOrder);
 		writeOrderFile();
+	}
+
+	// view invoice code
+	public void readFromFile(ArrayList<ArrayList<String>> itemsList, String orderNum) {
+		try {
+			File myObj = new File("textfile.txt"); //no current text file with price
+			Scanner myReader = new Scanner(myObj);
+			// assumption : data format "123 BG03 Beef Burger 1 - 10.00 10.00"
+			while (myReader.hasNextLine()) {
+				String data = myReader.nextLine();
+				String[] Input = data.split("\t");
+				ArrayList<String> datalist = new ArrayList<>();
+				if (Input.length > 0 && Input[0].equals(orderNum)) {
+					// Add remaining data to ArrayList
+					for (String input : Input) {
+						datalist.add(input);
+					}
+				}
+				itemsList.add(datalist);
+			}
+
+			myReader.close();
+
+		} catch (FileNotFoundException e) {
+			System.out.println("An error occurred.");
+			e.printStackTrace();
+		}
+	}
+
+	public double sumValue(ArrayList<ArrayList<String>> itemsList) {
+		double total = 0;
+		for (ArrayList<String> items : itemsList) {
+			total += Double.parseDouble(items.get(6));
+		}
+		return total;
+	}
+
+	public double checkMembership(String membership, double total) {
+		double discount = 0;
+		if (membership.equals("y") || membership.equals("Y")) {
+			discount = total * 0.1;
+			// assumption : 10 % offer will be given to member
+		}
+		return discount;
+	}
+	
+	public double computeDiscountedTotal(double total, double discount) {
+		return total - discount;
 	}
 }

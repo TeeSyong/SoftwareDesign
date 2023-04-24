@@ -22,5 +22,8 @@ public interface IDataStore {
 	public void updateOrder(String orderId, String itemCode, int qtt, String remarks);
 	public void deleteOrder(String orderId, String itemCode) ;
 	public void addOrder(String orderId, String itemCode,int qtt, String remarks);
-	
+	public void readFromFile(ArrayList<ArrayList<String>> itemsList, String orderNum);
+	public double sumValue(ArrayList<ArrayList<String>> itemsList);
+	public double checkMembership(String membership, double total);
+	public double computeDiscountedTotal(double total, double discount);
 }
