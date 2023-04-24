@@ -27,7 +27,11 @@ public class DataLists implements IDataStore {
 		items = new ArrayList<Item>();
 		orders = new ArrayList<Order>();
 		orderIdList = new ArrayList<String>();
+<<<<<<< Updated upstream
 		tempOrders = new ArrayList<Order>();
+=======
+
+>>>>>>> Stashed changes
 	}
 
 	// -------------------------------------------------------------------------------
@@ -401,7 +405,7 @@ public class DataLists implements IDataStore {
 	
 	// View Order Code
 
-	// For Yee Lin view order temporarily use purpose :)
+	// For Yee Lin view order use purpose :)
 	public ArrayList<String[]> openOrderFileV2() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
