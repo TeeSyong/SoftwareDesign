@@ -204,7 +204,7 @@ public class ConsoleUI {
 			System.out.println(orderIdList.get(i));
 		}
 		System.out.println("\n");
-		
+
 		String orderId = getOrderIdInput();
 		// controller.openOrderFile();
 		controller.printOrder(orderId);
@@ -283,45 +283,61 @@ public class ConsoleUI {
 
 	// VIEW INVOICE
 	public void viewInvoice() {
-
-		ArrayList<ArrayList<String>> itemsList = new ArrayList();
-
+		double total,discount=0,discountedTotal=0;
 		List<String> orderIdList = controller.getOrderIdList();
 		System.out.println("Order ID\n--------");
 		for (int i = 0; i < orderIdList.size(); i++) {
 			System.out.println(orderIdList.get(i));
 		}
 		System.out.println("\n");
+
+		String orderId = getOrderIdInput();
+
+		String option;
+
+		ArrayList<ArrayList<String>> orderList=controller.getOrderListWithByOrderNum(orderId);
+		total=controller.calculateTotalOrderPrice(orderList);
+		boolean hasMembership = false;
+		do {
+			System.out.print("Are you a member? (Y/N):");
+			option = scanner.nextLine().toLowerCase();
+			if (option.equals("y")) {
+				boolean membershipValid =checkMemberIdInput();
+				if(membershipValid) {
+					 discount=controller.getDiscountPrice(total);
+					 discountedTotal=controller.computeDiscountedTotal(total, discount);
+				}
+				hasMembership=true;
+			}else if(option.equals("n")) {
+				break;
+			}else {
+				System.out.println("Invalid Input,Please enter Y/N");
+			}
+
+		} while (!hasMembership);
+
 		
-		System.out.print("Enter order number:");
-		String orderNum = scanner.nextLine();
-
-		System.out.print("Are you a member? (Y/N):");
-		String membership = scanner.nextLine();
-		System.out.println();
-
-//			Read From file
-		controller.readFromFile(itemsList, orderNum);
-
-		double total = controller.sumValue(itemsList);
-		double discount = controller.checkMembership(membership, total);
-		double discountedTotal = controller.computeDiscountedTotal(total, discount);
-
 		System.out.println("Item Code\tName\t\t\tQtt\t\tRemarks\t\tPrice(RM)\tTotal Price(RM)");
 		System.out.println(
 				"-------------------------------------------------------------------------------------------------------");
-		for (ArrayList<String> items : itemsList) {
-			for (int i = 1; i < items.size(); i++) {
-				System.out.print(items.get(i) + "\t\t");
+		for (ArrayList<String> orders : orderList) {
+			for (int i = 1; i < orders.size(); i++) {
+				System.out.print(orders.get(i) + "\t\t");
 			}
 			System.out.println();
 		}
-
-		System.out.println();
-		System.out.println(String.format("Subtotal(RM)\t :%.2f", total));
-		System.out.println(String.format("Member discount\t :%.2f", discount));
-		System.out.println(String.format("Total(RM)\t :%.2f", discountedTotal));
-		System.out.println(String.format("Rounded total(RM):%.2f", Math.ceil(discountedTotal / 0.10) * 0.10));
+		if(hasMembership) {
+			System.out.println();
+			System.out.println(String.format("Subtotal(RM)\t :%.2f", total));
+			System.out.println(String.format("Member discount\t :%.2f", discount));
+			System.out.println(String.format("Total(RM)\t :%.2f", discountedTotal));
+			System.out.println(String.format("Rounded total(RM):%.2f", Math.ceil(discountedTotal / 0.10) * 0.10));
+		}else {
+			System.out.println();
+			System.out.println(String.format("Subtotal(RM)\t :%.2f", total));
+			System.out.println(String.format("Rounded total(RM):%.2f", Math.ceil(total)));
+		}
+		
 
 	}
 
@@ -343,10 +359,17 @@ public class ConsoleUI {
 			skip = scanner.nextLine();
 			System.out.println("\n");
 		}
-
+		
 		controller.openOrderFile();
+		boolean AddedOrder;
+		if(AddedOrder=false) {
+			controller.addOrderToList();
+			AddedOrder=true;
+		}
+
 		int count = controller.getNumberOfOrders();
-		List<Order> orders = controller.getAllOrders();
+		List<Order> ordersOriginal = controller.getAllOrders();
+		List<Order> orders = new ArrayList<Order>(ordersOriginal);
 		List<String> orderIdList = controller.getOrderIdList();
 
 		Order aOrder;
@@ -383,15 +406,7 @@ public class ConsoleUI {
 					System.out.println(orderIdList.get(i));
 				}
 				System.out.println("\n");
-				System.out.print("Enter Order ID to search: ");
-				String orderID = scanner.nextLine();
-				System.out.println("\n");
-				while (!orderIdList.contains(orderID)) {
-					System.out.println("Order ID do not exist.");
-					System.out.print("Enter Order ID to search: ");
-					orderID = scanner.nextLine();
-					System.out.println("\n");
-				}
+				String orderID=getOrderIdInput();
 
 				System.out.println("Order ID: " + orderID + "\n");
 				System.out.println("Item Code\tName\t\tQtt\tRemarks");
@@ -416,7 +431,7 @@ public class ConsoleUI {
 			} while (loop);
 
 		}
-		orders.clear();
+		//orders.clear();
 
 	}
 
@@ -426,7 +441,7 @@ public class ConsoleUI {
 		boolean isFound = false;
 		do {
 			System.out.print("Enter order number: ");
-			orderId = scanner.nextLine();
+			orderId = scanner.nextLine().toUpperCase();
 			for (int i = 0; i < orders.size(); i++) {
 				if (orderId.equals(orders.get(i).getOrderId())) {
 					isFound = true;
@@ -462,5 +477,23 @@ public class ConsoleUI {
 		} while (!isFound);
 		return itemCode;
 
+	}
+
+	public boolean checkMemberIdInput() {
+		String membership;
+		boolean isValid = false;
+		do {
+			System.out.print("Enter membership id (Enter 0 to return) : ");
+			membership = scanner.nextLine();
+			if (membership.equals("0")) {
+				break;
+			}
+			isValid = controller.checkUserMembership(membership);
+
+			if (!isValid) {
+				System.out.println("No membership code found");
+			}
+		} while (!isValid);
+		return isValid;
 	}
 }

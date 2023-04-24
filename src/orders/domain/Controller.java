@@ -81,18 +81,18 @@ public class Controller {
 	}
 	
 	//VIEW INVOICE
-	public void readFromFile(ArrayList<ArrayList<String>> itemsList, String orderNum) {
-		dataLists.readFromFile(itemsList, orderNum);
+	public ArrayList<ArrayList<String>> getOrderListWithByOrderNum(String orderNum) {
+		return dataLists.getOrderListWithByOrderNum(orderNum);
 	}
-		
-	public double sumValue(ArrayList<ArrayList<String>> itemsList) {
-		return dataLists.sumValue(itemsList);
+	public double calculateTotalOrderPrice(ArrayList<ArrayList<String>> orderList) {
+		return dataLists.calculateTotalOrderPrice(orderList);
 	}
-	
-	public double checkMembership(String membership, double total) {
-		return dataLists.checkMembership(membership, total);
+	public boolean checkUserMembership(String membership) {
+		return dataLists.checkUserMembership(membership);
 	}
-	
+	public double getDiscountPrice(double total) {
+		return dataLists.getDiscountPrice(total);
+	}
 	public double computeDiscountedTotal(double total, double discount) {
 		return dataLists.computeDiscountedTotal(total, discount);
 	}
@@ -117,5 +117,5 @@ public class Controller {
 	public List<String> getOrderIdList(){
 		return dataLists.getOrderIdList();
 	}
-	
+
 }

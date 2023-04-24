@@ -1,6 +1,7 @@
 package orders.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -68,6 +69,7 @@ public class DataLists implements IDataStore {
 		}
 		return false;
 	}
+	
 
 	// function used in create user profile to verify the username and password
 	// input by the user
@@ -125,10 +127,11 @@ public class DataLists implements IDataStore {
 		}
 	}
 
-	public void openOrderFile() {
+	
+	public ArrayList<String[]> openOrderFile() {
 		ArrayList<String[]> linesRead = new ArrayList<String[]>();
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
-		;
+		
 		Scanner inputStream = null;
 		try {
 			inputStream = new Scanner(new File(fileName));
@@ -142,13 +145,18 @@ public class DataLists implements IDataStore {
 			String[] tokens = singleLine.split(",");
 			linesRead.add(tokens);
 		}
+		inputStream.close();
+		return linesRead;
+	}
 
+	public void addOrderToList() {
+		ArrayList<String[]> linesRead = new ArrayList<String[]>();
+		linesRead = openOrderFile();
 		Order anOrder;
 		for (String[] strArray : linesRead) {
 			anOrder = new Order(strArray[0], strArray[1], strArray[2], Integer.parseInt(strArray[3]), strArray[4]);
 			orders.add(anOrder);
 		}
-		inputStream.close();
 	}
 
 	public int getNumberOfOrders() {
@@ -386,38 +394,6 @@ public class DataLists implements IDataStore {
 
 	// View Order Code
 
-	// For Yee Lin view order use purpose :)
-	public ArrayList<String[]> openOrderFileV2() {
-		ArrayList<String[]> linesRead = new ArrayList<String[]>();
-		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
-		
-		Scanner inputStream = null;
-		try {
-			inputStream = new Scanner(new File(fileName));
-		} catch (FileNotFoundException e) {
-			System.out.println("Error opening the file " + fileName);
-			System.exit(0);
-		}
-
-		while (inputStream.hasNextLine()) {
-			String singleLine = inputStream.nextLine();
-			String[] tokens = singleLine.split(",");
-			linesRead.add(tokens);
-		}
-		inputStream.close();
-		return linesRead;
-	}
-
-	public void addOrderToList() {
-		ArrayList<String[]> linesRead = new ArrayList<String[]>();
-		linesRead = openOrderFileV2();
-		Order anOrder;
-		for (String[] strArray : linesRead) {
-			anOrder = new Order(strArray[0], strArray[1], strArray[2], Integer.parseInt(strArray[3]), strArray[4]);
-			orders.add(anOrder);
-		}
-	}
-
 	public void printOrder(String orderId) {
 		int count = this.getNumberOfOrders();
 		Order aOrder;
@@ -498,6 +474,86 @@ public class DataLists implements IDataStore {
 	}
 
 	// view invoice code
+	public ArrayList<ArrayList<String>> addPriceToOrderList() {
+		ArrayList<String[]> orderList = openOrderFile();
+		ArrayList<HashMap<String, String>> MenuArr = this.menuInDictionary();
+		ArrayList<ArrayList<String>> orderListWithPrice= new ArrayList<ArrayList<String>>();
+		
+		for(int i=0;i<orderList.size();i++) {
+			ArrayList<String> wordList = new ArrayList<String>(Arrays.asList(orderList.get(i)));
+			orderListWithPrice.add(wordList);
+		}
+		
+		for(int i=0;i<orderListWithPrice.size();i++) {
+			for(int j=0;j<MenuArr.size();j++) {
+				if(orderListWithPrice.get(i).get(1).equals(MenuArr.get(j).get("Code"))) {
+					orderListWithPrice.get(i).add(MenuArr.get(j).get("Price"));
+				}
+			}
+		}
+		for(int i=0;i<orderListWithPrice.size();i++) {
+			double quantity=Double.parseDouble(orderListWithPrice.get(i).get(3));
+			double unitPrice=Double.parseDouble(orderListWithPrice.get(i).get(5));
+			String totalItemPrice=Double.toString(quantity*unitPrice);
+			orderListWithPrice.get(i).add(totalItemPrice);
+		}	
+		return orderListWithPrice;
+	}
+	
+	public ArrayList<ArrayList<String>> getOrderListWithByOrderNum(String orderNum) {
+		ArrayList<ArrayList<String>> orderList =addPriceToOrderList();
+		ArrayList<ArrayList<String>> ordersToComputeTotal =new ArrayList<ArrayList<String>>();
+
+		for(int i=0;i<orderList.size();i++) {
+			if(orderList.get(i).get(0).equals(orderNum)) {
+				ordersToComputeTotal.add(orderList.get(i));
+			}
+		}
+		return ordersToComputeTotal;
+		
+	}
+	
+	public double calculateTotalOrderPrice(ArrayList<ArrayList<String>> orderList) {
+
+		double total=0;
+		for(int i=0;i<orderList.size();i++) {
+			total += Double.parseDouble(orderList.get(i).get(6));
+		}
+		return total;
+		
+	}
+	
+	public boolean checkUserMembership(String membership) {
+
+		try {
+			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";
+			File myFile = new File(fileName);
+			Scanner reader = new Scanner(myFile);
+
+			while (reader.hasNextLine()) {
+				String existUser = reader.nextLine();
+				String[] tokens = existUser.split(",");
+
+				if (tokens[0].equals(membership)) {
+					return true;
+				}
+			}
+
+		} catch (FileNotFoundException ex) {
+			System.out.println("An error occurred.");
+		}
+		return false;
+	}
+	
+	public double getDiscountPrice(double total) {
+		// assumption : 10 % offer will be given to member
+		return total*0.1;
+	}
+	
+	public double computeDiscountedTotal(double total, double discount) {
+		return total - discount;
+	}
+	
 	public void readFromFile(ArrayList<ArrayList<String>> itemsList, String orderNum) {
 		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
 		try {
@@ -508,7 +564,7 @@ public class DataLists implements IDataStore {
 			while (myReader.hasNextLine()) {
 				String data = myReader.nextLine();
 				
-				Input = data.split("\t");
+				Input = data.split(",");
 				
 				String itemCode = Input[1];
 				int qtt = Integer.parseInt(Input[3]);
@@ -530,8 +586,8 @@ public class DataLists implements IDataStore {
 				
 				//addPriceToInput(String[] Input);
 				
-				Input[6] = Double.toString(unitPrice);
-				Input[7] = Double.toString(totalPrice);
+				Input[5] = Double.toString(unitPrice);
+				Input[6] = Double.toString(totalPrice);
 			}
 				
 				
@@ -571,7 +627,7 @@ public class DataLists implements IDataStore {
 		return discount;
 	}
 	
-	public double computeDiscountedTotal(double total, double discount) {
-		return total - discount;
-	}
+
+	
+
 }
