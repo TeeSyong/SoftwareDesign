@@ -1,6 +1,7 @@
 package orders.domain;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -16,7 +17,9 @@ public class DataLists implements IDataStore {
 	private List<Item> items;
 
 	private List<Order> orders;
-
+	
+	private List<Order> tempOrders;
+	
 	private List<String> orderIdList;
 
 	public DataLists() {
@@ -24,6 +27,7 @@ public class DataLists implements IDataStore {
 		items = new ArrayList<Item>();
 		orders = new ArrayList<Order>();
 		orderIdList = new ArrayList<String>();
+		tempOrders = new ArrayList<Order>();
 	}
 
 	// -------------------------------------------------------------------------------
@@ -304,6 +308,97 @@ public class DataLists implements IDataStore {
 		}
 	}
 
+	//create order
+	public void createTempOrder(String itemCode,int quantity,String remark)
+	{
+		String menuFile = System.getProperty("user.dir") + "\\src\\orders\\file\\menu.txt";
+		File myMenu =  new File(menuFile);
+
+		String orderId,foodName = null;
+
+		Scanner reader;
+		try {
+
+			reader = new Scanner (myMenu);
+			while(reader.hasNextLine()){
+				String menu = reader.nextLine();
+				String [] tokens = menu.split(",");
+				if(tokens[0].equals(itemCode))
+				{
+					foodName = tokens[1];
+				}
+			}
+
+			
+			Order anOrder = new Order(itemCode,foodName,quantity,remark);
+			tempOrders.add(anOrder);
+			System.out.println("\nItem Code\tName\t\tQty\t\tRemarks");
+			System.out.println("----------------------------------------");
+			for(int i=0;i<tempOrders.size();i++)
+			{
+				System.out.println(tempOrders.get(i).getItemCode()+"\t\t"+tempOrders.get(i).getFoodName()+"\t"+tempOrders.get(i).getQuantity()+"\t\t"+tempOrders.get(i).getRemark());
+			}
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		}
+	}
+	public void createOrder()
+	{
+		try
+		{
+		String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\order.txt";
+		File myFile =  new File(fileName);
+		FileWriter writer;
+		writer = new FileWriter(fileName,true);
+		
+		int highestIdNum =0;
+		String orderId = null;
+		ArrayList <Integer> id = new ArrayList<Integer>();
+		
+		Scanner reader;
+		reader = new Scanner (myFile);
+			while (reader.hasNextLine())
+			{
+				String order = reader.nextLine();
+				String[] tokens = order.split(",");
+				int idNum = Integer.parseInt(tokens[0].replace("OD",""));
+				id.add(idNum);
+				highestIdNum = Collections.max(id);	
+			}
+			
+			if(highestIdNum+1<10)
+			{
+				orderId = "OD0".concat(Integer.toString(highestIdNum+1));
+			}
+			else
+			{
+				orderId = "OD".concat(Integer.toString(highestIdNum+1));
+			}
+			Order anOrder;
+			for(int i =0;i<tempOrders.size();i++)
+			{
+				anOrder = new Order(orderId,tempOrders.get(i).getItemCode(),tempOrders.get(i).getFoodName(),tempOrders.get(i).getQuantity(),tempOrders.get(i).getRemark());
+				orders.add(anOrder);
+				String order = orderId.concat(",").concat(tempOrders.get(i).getItemCode()).concat(",").concat(tempOrders.get(i).getFoodName()).concat(",").concat(Integer.toString(tempOrders.get(i).getQuantity())).concat(",").concat(tempOrders.get(i).getRemark());
+				writer.write(order);
+				writer.write("\n");
+
+			}
+			writer.close();
+
+			System.out.println("Order successfully added to system.");
+			System.out.println("Your order number is "+orderId);
+			
+		} catch (FileNotFoundException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+		}
+	}
+	
 	// View Order Code
 
 	// For Yee Lin view order temporarily use purpose :)

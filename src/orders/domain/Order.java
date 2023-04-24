@@ -23,6 +23,14 @@ public class Order {
 		this.remark = remark;
 	}
 	
+	//created this constructor to done the tempOrder function
+	public Order(String itemCode, String foodName, int quantity, String remark ) {
+		this.itemCode = itemCode;
+		this.foodName = foodName;
+		this.quantity = quantity;
+		this.remark = remark;
+	}
+	
 	public String getOrderId() {
 		return orderId;
 	}

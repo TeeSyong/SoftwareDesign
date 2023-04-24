@@ -172,6 +172,41 @@ public class ConsoleUI {
 	//CREATE ORDER
 	
 	public void createOrder() {
+		System.out.println("CREATE ORDER \r\n"
+				+ "\r\n"
+				+ "----------------- ");
+		String opt= "Y";
+		
+		while(opt.equals("Y"))
+		{
+			System.out.print("Enter item code to order : ");
+			String itemCode = scanner.nextLine().toUpperCase();
+			System.out.print("Enter quantity           : ");
+			int quantity = scanner.nextInt();
+			scanner.nextLine(); //consume newline leftOver
+			System.out.print("Enter remarks (- if none): ");
+			String remark = scanner.nextLine();
+			
+			controller.createTempOrder(itemCode,quantity,remark);
+			
+			System.out.print("\nAdd next item? (Y/N): ");
+			opt = scanner.nextLine().toUpperCase();
+		}
+		System.out.println("1) Confirm Order");
+		System.out.println("2) Cancel Order");
+		System.out.print("Please Enter Your Option: ");
+		int createOrder = scanner.nextInt();
+		if(createOrder == 1)
+		{
+			controller.createOrder();
+			System.out.println("Press Enter to return to main menu ");
+		}
+
+		else
+		{
+			System.out.println("Order cancelled.");
+			System.out.println("Press Enter to return to main menu ");
+		}
 		
 	}
 	

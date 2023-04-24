@@ -1,6 +1,7 @@
 package orders.domain;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,7 +48,15 @@ public class Controller {
 
 	
 	//CREATE ORDER
+	public void createTempOrder(String itemCode,int quantity,String remark)
+	{
+		dataLists.createTempOrder(itemCode,quantity,remark);
+	}
 	
+	public void createOrder()
+	{
+		dataLists.createOrder();
+	}
 	
 	
 	//VIEW ORDER

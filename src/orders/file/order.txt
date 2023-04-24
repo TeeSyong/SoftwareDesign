@@ -8,3 +8,6 @@ OD04,BG09,Cheezy wedgets,1,medium pls
 OD01,BG10,Sprite,3,Add more ice
 OD01,DR02,Coke Drink,16,inside got 016
 OD01,SD02,Ice Cream,3,Chocolate Lin
+OD05,BG02,Fish Burger,1,-
+OD06,BG01,Chicken Burger,2,-
+OD06,BG03,Beef Burger,1,-
