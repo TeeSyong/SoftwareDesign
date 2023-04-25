@@ -172,9 +172,7 @@ public class ConsoleUI {
 	//CREATE ORDER
 	
 	public void createOrder() {
-		System.out.println("CREATE ORDER \r\n"
-				+ "\r\n"
-				+ "----------------- ");
+		System.out.println("CREATE ORDER \r\n------------------------------ ");
 		String opt= "Y";
 		
 		while(opt.equals("Y"))
@@ -204,7 +202,7 @@ public class ConsoleUI {
 
 		else
 		{
-			System.out.println("Order cancelled.");
+			controller.cancelOrder();
 			System.out.println("Press Enter to return to main menu ");
 		}
 		

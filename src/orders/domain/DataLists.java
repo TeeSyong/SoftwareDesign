@@ -387,8 +387,9 @@ public class DataLists implements IDataStore {
 			}
 			writer.close();
 
-			System.out.println("Order successfully added to system.");
+			System.out.println("\nOrder successfully added to system.");
 			System.out.println("Your order number is "+orderId);
+			tempOrders.clear();
 			
 		} catch (FileNotFoundException ex) {
 			// TODO Auto-generated catch block
@@ -397,6 +398,12 @@ public class DataLists implements IDataStore {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}
+	}
+	
+	public void cancelOrder()
+	{
+		System.out.println("Order cancelled.");
+		tempOrders.clear();
 	}
 	
 	// View Order Code

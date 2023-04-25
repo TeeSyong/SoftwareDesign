@@ -58,6 +58,10 @@ public class Controller {
 		dataLists.createOrder();
 	}
 	
+	public void cancelOrder()
+	{
+		dataLists.cancelOrder();
+	}
 	
 	//VIEW ORDER
 	

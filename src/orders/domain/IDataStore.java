@@ -16,6 +16,7 @@ public interface IDataStore {
 	public void printKeywordMenu(String keywords);
 	public ArrayList<String[]>  openOrderFileV2();
 	public void createOrder();
+	public void cancelOrder();
 	public void createTempOrder(String itemCode,int quantity,String remark);
 	public void addOrderToList();
 	public void printOrder(String orderId);
