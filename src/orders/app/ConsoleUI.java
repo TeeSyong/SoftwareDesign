@@ -516,7 +516,7 @@ public class ConsoleUI {
 		boolean same = false;
 		do {
 			System.out.print("Enter item code          : ");
-			itemCode = scanner.nextLine();
+			itemCode = scanner.nextLine().toUpperCase();
 			for (int i = 0; i < menu.size(); i++) {
 				if (itemCode.equals(menu.get(i)[0])) {
 					same = true;
