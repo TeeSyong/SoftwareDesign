@@ -37,6 +37,10 @@ public class Controller {
 	
 	
 	//VIEW MENU
+	public ArrayList<String[]> readMenu() {
+		return dataLists.readMenu();
+	}
+	
 	public void printMenu()
 	{
 		dataLists.printMenu();
@@ -85,10 +89,22 @@ public class Controller {
 	}
 	
 	//VIEW INVOICE
-	public void viewinvoice() {
-		viewInvoice.operation();
+	public ArrayList<ArrayList<String>> getOrderListWithByOrderNum(String orderNum) {
+		return dataLists.getOrderListWithByOrderNum(orderNum);
 	}
-		
+	public double calculateTotalOrderPrice(ArrayList<ArrayList<String>> orderList) {
+		return dataLists.calculateTotalOrderPrice(orderList);
+	}
+	public boolean checkUserMembership(String membership) {
+		return dataLists.checkUserMembership(membership);
+	}
+	public double getDiscountPrice(double total) {
+		return dataLists.getDiscountPrice(total);
+	}
+	public double computeDiscountedTotal(double total, double discount) {
+		return dataLists.computeDiscountedTotal(total, discount);
+	}
+	
 	//CHECK ORDER
 	public void checkOrder() {
 		
@@ -109,4 +125,5 @@ public class Controller {
 	public List<String> getOrderIdList(){
 		return dataLists.getOrderIdList();
 	}
+
 }
