@@ -37,6 +37,10 @@ public class Controller {
 	
 	
 	//VIEW MENU
+	public ArrayList<String[]> readMenu() {
+		return dataLists.readMenu();
+	}
+	
 	public void printMenu()
 	{
 		dataLists.printMenu();

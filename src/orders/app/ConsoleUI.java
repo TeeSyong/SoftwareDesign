@@ -163,12 +163,14 @@ public class ConsoleUI {
 	// CREATE ORDER
 
 	public void createOrder() {
-		System.out.println("CREATE ORDER \r\n" + "\r\n" + "----------------- ");
+		System.out.println("CREATE ORDER \r\n" + "\r\n" + "--------------------------------- ");
 		String opt = "Y";
-
-		while (opt.equals("Y")) {
-			System.out.print("Enter item code to order : ");
-			String itemCode = scanner.nextLine().toUpperCase();
+		controller.printMenu();
+		
+		boolean isValid = false;
+		
+		do {
+			String itemCode = getItemCodeInputFromMenu();
 			System.out.print("Enter quantity           : ");
 			int quantity = scanner.nextInt();
 			scanner.nextLine(); // consume newline leftOver
@@ -177,23 +179,41 @@ public class ConsoleUI {
 
 			controller.createTempOrder(itemCode, quantity, remark);
 
-			System.out.print("\nAdd next item? (Y/N): ");
-			opt = scanner.nextLine().toUpperCase();
-		}
-		System.out.println("1) Confirm Order");
-		System.out.println("2) Cancel Order");
-		System.out.print("Please Enter Your Option: ");
-		int createOrder = scanner.nextInt();
-		if (createOrder == 1) {
-			controller.createOrder();
-			System.out.println("Press Enter to return to main menu ");
-		}
-
-		else {
-			System.out.println("Order cancelled.");
-			System.out.println("Press Enter to return to main menu ");
-		}
-
+			do {
+				System.out.print("\nAdd next item? (Y/N): ");
+				opt = scanner.nextLine().toUpperCase();
+				
+				if(opt.equals("Y") || opt.equals("N")) {
+					isValid = true;
+				} else {
+					System.out.println("Invalid input. Please enter again");
+				}
+			} while(!isValid);				
+		} while (opt.equals("Y"));
+		
+		boolean invalid; 
+		do {
+			invalid = false;
+			System.out.println("1) Confirm Order");
+			System.out.println("2) Cancel Order");
+			System.out.print("Please Enter Your Option: ");
+			int createOrder = scanner.nextInt();
+			if (createOrder == 1) {
+				controller.createOrder();
+				System.out.println("Press Enter to return to main menu ");
+			}
+	
+			else if (createOrder == 2){
+				System.out.println("Order cancelled.");
+				System.out.println("Press Enter to return to main menu ");
+				scanner.nextLine();
+			}
+			
+			else {
+				System.out.println("Invalid input. Please enter again\n");
+				invalid = true;
+			}
+		} while(invalid);
 	}
 
 	// VIEW ORDER
@@ -206,7 +226,6 @@ public class ConsoleUI {
 		System.out.println("\n");
 
 		String orderId = getOrderIdInput();
-		// controller.openOrderFile();
 		controller.printOrder(orderId);
 		boolean invalidChoice = false;
 		String choice;
@@ -228,7 +247,7 @@ public class ConsoleUI {
 						String codeToModify, remarksToModify;
 						int qttToModify;
 
-						codeToModify = getItemCodeInput();
+						codeToModify = getItemCodeInputFromOrder();
 						System.out.print("Enter quantity           : ");
 						qttToModify = scanner.nextInt();
 						scanner.nextLine(); // skip
@@ -240,7 +259,7 @@ public class ConsoleUI {
 
 						break;
 					case 2:
-						String codeToDel = getItemCodeInput();
+						String codeToDel = getItemCodeInputFromOrder();
 
 						controller.deleteOrder(orderId, codeToDel);
 						controller.printOrder(orderId);
@@ -249,7 +268,7 @@ public class ConsoleUI {
 					case 3:
 						controller.printMenu();
 
-						String codeToAdd = getItemCodeInput();
+						String codeToAdd = getItemCodeInputFromMenu();
 						System.out.print("Enter quantity           : ");
 						int qttToAdd = scanner.nextInt();
 						scanner.nextLine(); // skip
@@ -338,6 +357,9 @@ public class ConsoleUI {
 			System.out.println(String.format("Rounded total(RM):%.2f", Math.ceil(total)));
 		}
 		
+		System.out.println("Press Enter to return to main menu");
+		scanner.nextLine();
+		
 
 	}
 
@@ -420,14 +442,22 @@ public class ConsoleUI {
 					}
 				}
 				System.out.println("\n");
-				System.out.print("Search order ID again?(Y/N): ");
-				String opt = scanner.nextLine();
-				System.out.println("\n");
-				if (opt.toUpperCase().equals("Y"))
-					loop = true;
-				else
-					loop = false;
-
+				
+				boolean validInput;
+				do {
+					validInput = true;
+					System.out.print("Search order ID again?(Y/N): ");
+					String opt = scanner.nextLine();
+					System.out.println("\n");
+					if (opt.toUpperCase().equals("Y"))
+						loop = true;
+					else if (opt.toUpperCase().equals("N"))
+						loop = false;
+					else {
+						System.out.println("Invalid input. Please enter again");
+						validInput = false;
+					}
+				}while(!validInput);
 			} while (loop);
 
 		}
@@ -457,26 +487,49 @@ public class ConsoleUI {
 
 	}
 
-	public String getItemCodeInput() {
+	public String getItemCodeInputFromOrder() {
 		List<Order> orders = controller.getAllOrders();
 		String itemCode;
-		boolean isFound = false;
+		boolean same = false;
 		do {
-			System.out.print("Enter item code: ");
+			System.out.print("Enter item code\t: ");
 			itemCode = scanner.nextLine();
 			for (int i = 0; i < orders.size(); i++) {
-				if (!(itemCode.equals(orders.get(i).getItemCode()))) {
-					isFound = true;
+				if (itemCode.equals(orders.get(i).getItemCode())) {
+					same = true;
 					break;
 				}
 			}
 
-			if (!isFound) {
+			if (!same) {
 				System.out.println("No item code found");
 			}
-		} while (!isFound);
+		} while (!same);
 		return itemCode;
 
+	}
+	
+	public String getItemCodeInputFromMenu() {
+		//[["BG01","Chicken Burger","9.00"],[],[]]
+		ArrayList<String[]> menu = controller.readMenu();
+		String itemCode;
+		boolean same = false;
+		do {
+			System.out.print("Enter item code\t: ");
+			itemCode = scanner.nextLine();
+			for (int i = 0; i < menu.size(); i++) {
+				if (itemCode.equals(menu.get(i)[0])) {
+					same = true;
+					break;
+				}
+			}
+
+			if (!same) {
+				System.out.println("No item code found");
+			}
+		} while (!same);
+		return itemCode;
+		
 	}
 
 	public boolean checkMemberIdInput() {

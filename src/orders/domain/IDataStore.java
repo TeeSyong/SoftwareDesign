@@ -16,6 +16,7 @@ public interface IDataStore {
 	public List<Order> getAllOrders();
 	public List<String> getOrderIdList();
 	//View Menu
+	public ArrayList<String[]> readMenu();
 	public void printMenu();
 	public void printKeywordMenu(String keywords);
 	//Create Order

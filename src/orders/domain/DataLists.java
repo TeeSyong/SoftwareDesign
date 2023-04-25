@@ -231,7 +231,7 @@ public class DataLists implements IDataStore {
 
 			if (!isPrintedBurger) {
 				if (linesRead.get(i).get("Code").charAt(0) == 'B') {
-					System.out.println("BURGERS");
+					System.out.println("\nBURGERS");
 					System.out.println("--------");
 					System.out.println("Item Code\t Name\t\t Price");
 					System.out.println("-------------------------------------------");
@@ -240,7 +240,7 @@ public class DataLists implements IDataStore {
 			}
 			if (!isPrintedSides) {
 				if (linesRead.get(i).get("Code").charAt(0) == 'S') {
-					System.out.println("SIDES");
+					System.out.println("\nSIDES");
 					System.out.println("--------");
 					System.out.println("Item Code\t Name\t\t Price");
 					System.out.println("-------------------------------------------");
@@ -250,7 +250,7 @@ public class DataLists implements IDataStore {
 
 			if (!isPrintedDrinks) {
 				if (linesRead.get(i).get("Code").charAt(0) == 'D') {
-					System.out.println("DRINKS");
+					System.out.println("\nDRINKS");
 					System.out.println("--------");
 					System.out.println("Item Code\t Name\t\t Price");
 					System.out.println("-------------------------------------------");
@@ -328,7 +328,7 @@ public class DataLists implements IDataStore {
 			Order anOrder = new Order(itemCode, foodName, quantity, remark);
 			tempOrders.add(anOrder);
 			System.out.println("\nItem Code\tName\t\tQty\t\tRemarks");
-			System.out.println("----------------------------------------");
+			System.out.println("-----------------------------------------------------------");
 			for (int i = 0; i < tempOrders.size(); i++) {
 				System.out.println(tempOrders.get(i).getItemCode() + "\t\t" + tempOrders.get(i).getFoodName() + "\t"
 						+ tempOrders.get(i).getQuantity() + "\t\t" + tempOrders.get(i).getRemark());
@@ -398,7 +398,7 @@ public class DataLists implements IDataStore {
 		int count = this.getNumberOfOrders();
 		Order aOrder;
 		System.out.println("Item Code\tName\tQtt\tRemarks");
-		System.out.println("-----------------------------------------------");
+		System.out.println("-------------------------------------------------------------------");
 		for (int i = 0; i < count; i++) {
 			aOrder = orders.get(i);
 
