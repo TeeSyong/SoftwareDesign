@@ -397,13 +397,13 @@ public class DataLists implements IDataStore {
 	public void printOrder(String orderId) {
 		int count = this.getNumberOfOrders();
 		Order aOrder;
-		System.out.println("Item Code\tName\tQtt\tRemarks");
+		System.out.println("Item Code\tName\t\tQty\t\tRemarks");
 		System.out.println("-------------------------------------------------------------------");
 		for (int i = 0; i < count; i++) {
 			aOrder = orders.get(i);
 
 			if (orderId.equals(aOrder.getOrderId())) {
-				System.out.printf("%s\t\t%-20s\t%d\t%s\n", aOrder.getItemCode(), aOrder.getFoodName(),
+				System.out.printf("%s\t\t%s\t%d\t\t%s\n", aOrder.getItemCode(), aOrder.getFoodName(),
 						aOrder.getQuantity(), aOrder.getRemark());
 			}
 		}

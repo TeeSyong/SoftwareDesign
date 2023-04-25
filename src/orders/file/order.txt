@@ -19,3 +19,5 @@ OD08,SD01,French Fries,1,-
 OD09,BG01,Chicken Burger,1,-
 OD10,SD01,French Fries,1,-
 OD11,DR01,Fanta Juice,1,-
+OD12,BG04,Egg Burger,1,-
+OD12,BG01,Chicken Burger,1,ADSFBHJSFDAKLBGRAQ
