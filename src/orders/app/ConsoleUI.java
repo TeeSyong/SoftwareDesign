@@ -294,28 +294,30 @@ public class ConsoleUI {
 		System.out.println("\n");
 
 		String orderId = getOrderIdInput();
-
+		
 		String option;
-
+		
 		ArrayList<ArrayList<String>> orderList=controller.getOrderListWithByOrderNum(orderId);
 		total=controller.calculateTotalOrderPrice(orderList);
+
 		boolean hasMembership = false;
 		do {
-			System.out.print("Are you a member? (Y/N):");
-			option = scanner.nextLine().toLowerCase();
-			if (option.equals("y")) {
-				boolean membershipValid =checkMemberIdInput();
-				if(membershipValid) {
-					 discount=controller.getDiscountPrice(total);
-					 discountedTotal=controller.computeDiscountedTotal(total, discount);
+				System.out.print("Are you a member? (Y/N):");
+				option = scanner.nextLine().toLowerCase();
+				if (option.equals("y")) {
+					boolean membershipValid =checkMemberIdInput();
+				
+					if(membershipValid) {
+						 discount=controller.getDiscountPrice(total);
+						 discountedTotal=controller.computeDiscountedTotal(total, discount);
+						 hasMembership=true;
+					}
+					
+				}else if(option.equals("n")) {
+					break;
+				}else {
+					System.out.println("Invalid Input,Please enter Y/N");
 				}
-				hasMembership=true;
-			}else if(option.equals("n")) {
-				break;
-			}else {
-				System.out.println("Invalid Input,Please enter Y/N");
-			}
-
 		} while (!hasMembership);
 
 		
