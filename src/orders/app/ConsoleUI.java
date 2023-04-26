@@ -141,23 +141,6 @@ public class ConsoleUI {
 				searchChoiceInvalid = true;
 			}
 		} while (searchChoiceInvalid || searchAgain);
-
-		boolean orderChoiceInvalid;
-		do {
-			orderChoiceInvalid = false;
-			System.out.print("\nDo you want to make order? (Y/N): ");
-			String orderChoice = scanner.nextLine().toUpperCase();
-
-			if (orderChoice.equals("Y")) {
-				createOrder();
-			} else if (orderChoice.equals("N")) {
-				System.out.print("Press Enter to return to main menu");
-				scanner.nextLine();
-			} else {
-				System.out.println("Input error. Please enter again.");
-				orderChoiceInvalid = true;
-			}
-		} while (orderChoiceInvalid);
 	}
 
 	// CREATE ORDER

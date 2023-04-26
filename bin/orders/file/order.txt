@@ -15,3 +15,4 @@ OD01,SD02,Ice Cream,3,Chocolate Lin
 OD08,DR02,Coke Drink,2,sugar less
 OD09,DR03,Sky Juice,1,-
 OD09,DR02,Coke Drink,1,Sugar
+OD10,DR01,Fanta Juice,1,-
