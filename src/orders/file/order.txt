@@ -7,12 +7,10 @@ OD02,BG04,Egg Burger,2,-
 OD04,SD05,Cheesy Wedges,2,-
 OD07,DR01,Fanta Juice,1,orange
 OD07,SD04,Mash Potato,1,chili sauce
-OD01,SD02,Ice Cream,3,Chocolate Lin
 OD05,BG02,Fish Burger,1,-
 OD06,BG01,Chicken Burger,2,-
-OD01,DR02,Coke Drink,16,inside got 016
-OD01,SD02,Ice Cream,3,Chocolate Lin
-OD08,DR02,Coke Drink,2,sugar less
 OD09,DR03,Sky Juice,1,-
 OD09,DR02,Coke Drink,1,Sugar
 OD10,DR01,Fanta Juice,1,-
+OD11,DR04,Sprite Drink,2,Cold
+OD12,SD01,French Fries,2,Tomato
