@@ -73,7 +73,7 @@ public class DataLists implements IDataStore {
 
 	// function used in create user profile to verify the username and password
 	// input by the user
-	public boolean verifyLoign(String username, String password) {
+	public boolean verifyLogin(String username, String password) {
 
 		try {
 			String fileName = System.getProperty("user.dir") + "\\src\\orders\\file\\user.txt";

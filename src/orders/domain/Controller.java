@@ -26,10 +26,6 @@ public class Controller {
 	{
 		return dataLists.checkUserName(username);
 	}
-	public boolean verifyLoign(String username,String password)
-	{
-		return dataLists.verifyLoign(username, password);
-	}
 	public void createUser(String userName,String password)
 	{
 		dataLists.createUser(userName, password);
