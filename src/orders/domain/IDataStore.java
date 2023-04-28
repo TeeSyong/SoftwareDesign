@@ -7,7 +7,6 @@ import java.util.List;
 public interface IDataStore {
 	//Create user
 	public boolean checkUserName(String username);
-	public boolean verifyLoign(String username,String password);
 	public void createUser(String userName,String password);
 	//Check Order
 	public ArrayList<String[]>  openOrderFile();
