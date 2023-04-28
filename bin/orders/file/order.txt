@@ -13,3 +13,4 @@ OD09,DR03,Sky Juice,1,-
 OD09,DR02,Coke Drink,1,Sugar
 OD10,DR01,Fanta Juice,1,-
 OD11,DR04,Sprite Drink,2,Cold
+OD12,SD01,French Fries,2,Tomato
